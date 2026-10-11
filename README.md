@@ -1,5 +1,17 @@
 # Visitaê
 
+## Infraestrutura de componentes
+
+Módulos ES nativos em `dist/ui/index.mjs`, sem dependências externas ou inicialização automática. A landing page não importa estes módulos nesta etapa; seus arquivos e comportamentos permanecem intactos. React, shadcn/ui, Radix, lucide-react, react-icons e Embla não foram adicionados: o projeto original não usa React e já possui controles nativos funcionais. Não há migração para Tailwind.
+
+- `Button`, `Input`, `Select`, `Label` e `Accordion` criam elementos nativos com texto seguro e classes existentes. Botões aceitam variantes `dark`, `lime`, `light`, `outline` e tamanho `small`. Campos e labels devem permanecer dentro de `.contact-form`, com `id`, `name` e associação por `htmlFor`. Conteúdo fornecido como nó DOM é responsabilidade do chamador.
+- `Dialog({ element, closeButton })` recebe um `<dialog>` conectado ao documento, com título associado por `aria-labelledby` e botão de fechamento acessível. Expõe `open(opener)`, `close()` e `destroy()`. Reutiliza a modalidade nativa e prepara bloqueio de rolagem, retorno de foco e fechamento pelo backdrop; conteúdo e descarregamento de mídia continuam a cargo do componente específico.
+- `Carousel({ track, previous, next, status, dots })` recebe a estrutura existente, reutiliza rolagem nativa, geometria dos cards, teclado e movimento reduzido. Expõe `goTo(index)`, `update()` e `destroy()`. Preserve CSS, labels dos botões, `tabindex="0"` e nome acessível na trilha, além de `role="status"`/`aria-live="polite"` no status. Atualize após mudanças nos cards; não altera nem recria relatos.
+- `Navigation({ trigger, panel })` prepara o menu recolhível existente; o painel precisa de `id`. Expõe `open()`, `close()` e `destroy()`. Não exige Sheet. Aplique cada controlador uma única vez; use `destroy()` antes de remontar.
+- `BrandIcon('whatsapp', { label, size })` reutiliza exatamente o vetor Simple Icons já presente na origem: `viewBox="0 0 24 24"`, proporções preservadas, `fill="currentColor"` e `stroke="none"`. Sem `label`, o ícone é decorativo. O registro compartilhado aceita somente marcas verificadas; outras marcas ainda não foram adicionadas.
+
+Carregue futuramente o ponto de entrada por `<script type="module">`, mantendo `styles.css` e, para o carrossel, `testimonials.css`. Nenhum tema ou CSS global novo foi introduzido. `package.json` e `package-lock.json` registram zero dependências; `npm run dev` usa o servidor Python já disponível, `npm run check` verifica sintaxe e `npm test` executa os testes originais e dos novos controladores. Os testes de controladores usam limites DOM simulados; não constituem validação em navegador.
+
 ## Execução local — importação de 11/10/2026
 
 Origem efetivamente importada: `C:/Users/Vítor Velame/.codex/visualizations/2026/10/10/01a127f9-fe60-7560-aa0b-41ee0d7f6358/vitor-360`, incluindo as alterações locais existentes em `dist/index.html` e `dist/styles.css`.

@@ -1,0 +1,16 @@
+{
+  "name": "visitae",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Landing page estática original da Visitaê",
+  "scripts": {
+    "dev": "python -m http.server 5173 --bind 127.0.0.1 --directory dist",
+    "check": "node scripts/check.mjs",
+    "test": "node --test --test-isolation=none"
+  },
+  "engines": {
+    "node": ">=22.8.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

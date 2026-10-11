@@ -1,5 +1,11 @@
 # Visitaê
 
+## Design System alinhado à implementação
+
+`design-system.html` carrega os mesmos arquivos CSS e o mesmo endereço de fontes da landing. A prévia incorporada abre o próprio `dist/index.html`; os componentes simplificados da documentação anterior foram substituídos por essa referência real. As 17 seções documentam os valores implementados e as decisões pendentes, sem alterar a aplicação.
+
+Para consultar pelo servidor local, execute nesta pasta `python -m http.server 5174 --bind 127.0.0.1` e acesse `http://127.0.0.1:5174/design-system.html`. Sirva a raiz do projeto para que os caminhos `dist/` funcionem. A pasta deve acompanhar o HTML; fontes e demonstrações externas continuam dependendo de conexão.
+
 ## Infraestrutura de componentes
 
 Módulos ES nativos em `dist/ui/index.mjs`, sem dependências externas ou inicialização automática. A landing page não importa estes módulos nesta etapa; seus arquivos e comportamentos permanecem intactos. React, shadcn/ui, Radix, lucide-react, react-icons e Embla não foram adicionados: o projeto original não usa React e já possui controles nativos funcionais. Não há migração para Tailwind.

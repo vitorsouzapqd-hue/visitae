@@ -15,5 +15,5 @@ function check(directory) {
     }
   }
 }
-for (const directory of ['dist', 'tests', 'scripts']) check(resolve(root, directory));
-console.log('Syntax OK: application, UI modules, scripts and tests.');
+for (const directory of ['dist', 'tests', 'scripts', 'documentation']) check(resolve(root, directory));
+console.log('Syntax OK: application, UI modules, documentation, scripts and tests.');

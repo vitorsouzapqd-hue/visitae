@@ -4,6 +4,8 @@
 
 `design-system.html` carrega os mesmos arquivos CSS e o mesmo endereço de fontes da landing. A prévia incorporada abre o próprio `dist/index.html`; os componentes simplificados da documentação anterior foram substituídos por essa referência real. As 17 seções documentam os valores implementados e as decisões pendentes, sem alterar a aplicação.
 
+As seções também contêm 11 exemplos visíveis extraídos do HTML original: tipografia, botões, badge, faixa e ícones, cards de aplicações e soluções, carrossel com cinco relatos, diálogo, formulário, FAQ e menu móvel. Os exemplos usam os mesmos estilos e fontes em documentos isolados. O carrossel executa os scripts originais; a busca municipal usa `locations.js`; o formulário documental bloqueia o envio. Para atualizar os trechos após mudanças no site, execute `python scripts/sync-design-system-examples.py`.
+
 Para consultar pelo servidor local, execute nesta pasta `python -m http.server 5174 --bind 127.0.0.1` e acesse `http://127.0.0.1:5174/design-system.html`. Sirva a raiz do projeto para que os caminhos `dist/` funcionem. A pasta deve acompanhar o HTML; fontes e demonstrações externas continuam dependendo de conexão.
 
 ## Infraestrutura de componentes

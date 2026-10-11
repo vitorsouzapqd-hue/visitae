@@ -1,0 +1,65 @@
+# Installed dependencies
+node_modules/
+.pnp.*
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# Builds and test output
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+.svelte-kit/
+.astro/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
+
+# Caches and hosting metadata
+.cache/
+.parcel-cache/
+.turbo/
+.vite/
+.npm/
+.pnpm-store/
+.eslintcache
+.stylelintcache
+.vercel/
+.netlify/
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+.envrc
+.npmrc.local
+*.pem
+*.key
+*.p12
+*.pfx
+.aws/
+.ssh/
+secrets/
+credentials.json
+
+# Operating system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini

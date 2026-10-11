@@ -7,7 +7,7 @@ node_modules/
 .yarn/install-state.gz
 
 # Builds and test output
-dist/
+# The original static source lives in dist/ and must remain versioned.
 build/
 out/
 .next/

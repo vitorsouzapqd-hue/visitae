@@ -7,7 +7,6 @@ export function Testimonials() {
           <div><p class="eyebrow">05 / DEPOIMENTOS</p><h2 id="testimonials-title">Quem contratou<br><em>conta como foi.</em></h2></div>
           <p>Cada relato mostra uma experiência com o 360: o que o contratante queria resolver e como passou a usar o tour.</p>
         </div>
-        <div class="testimonials-preview" id="testimonials-preview" hidden><span class="status-dot" aria-hidden="true"></span><p><strong>Prévia ilustrativa.</strong> As pessoas e falas abaixo são fictícias. As capas foram geradas por IA para demonstrar o formato.</p></div>
         <div class="testimonials-carousel" role="region" aria-roledescription="carrossel" aria-label="Relatos do protótipo">
           <div class="testimonials-track" id="testimonials-track" role="group" tabindex="0" aria-label="Relatos. Use as setas do teclado para navegar."></div>
           <div class="testimonials-navigation">

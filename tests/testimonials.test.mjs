@@ -67,8 +67,6 @@ function mount(url = 'file:///C:/Site/dist/index.html', configured = {}, reduced
   const section = new Element('section', doc, 'testimonials-section', 'depoimentos');
   const add = (parent, tag, className = '', id = '') => { const child = new Element(tag, doc, className, id); parent.append(child); return child; };
   section.hidden = true;
-  const preview = add(section, 'div', 'testimonials-preview', 'testimonials-preview');
-  preview.hidden = true;
   const track = add(section, 'div', 'testimonials-track', 'testimonials-track');
   const dots = add(section, 'div', 'testimonials-dots');
   const previous = add(section, 'button', 'testimonial-prev');
@@ -81,13 +79,12 @@ function mount(url = 'file:///C:/Site/dist/index.html', configured = {}, reduced
     ResizeObserver: class { constructor(callback) { doc.resize.push(callback); } observe() {} },
   });
   vm.runInContext(read('dist/testimonials.js'), context);
-  return { doc, section, preview, track, dots, previous, next, status };
+  return { doc, section, track, dots, previous, next, status };
 }
 
 test('five compact cards show the quote before name/business, without player or reading controls', () => {
-  const { doc, section, preview, track, dots, previous, next, status } = mount();
+  const { doc, section, track, dots, previous, next, status } = mount();
   assert.equal(section.hidden, false);
-  assert.equal(preview.hidden, false);
   assert.equal(track.children.length, 5);
   assert.equal(dots.children.length, 5);
   assert.equal(status.textContent, '1–3 de 5');
@@ -123,15 +120,14 @@ test('five compact cards show the quote before name/business, without player or 
   assert.equal(quiet.track.lastScroll.behavior, 'auto');
 });
 
-test('public pages show illustrative cards with a notice; authorized entries replace their matching card', () => {
+test('public pages show cards without the removed notice; authorized entries replace their matching card', () => {
   const empty = mount('https://visitae.example/');
   assert.equal(empty.section.hidden, false);
   assert.equal(empty.track.children.length, 5);
-  assert.equal(empty.preview.hidden, false);
-  assert.match(read('src/sections/Testimonials.mjs'), /As pessoas e falas abaixo são fictícias/);
+  assert.equal(empty.doc.querySelector('#testimonials-preview'), null);
+  assert.ok(!read('dist/index.html').includes('id="testimonials-preview"'));
   const ready = mount('https://visitae.example/', { ambientes: { authorized: true, client: 'Cliente autorizado', business: 'Negócio autorizado', title: 'Título real', summary: 'Resumo real', transcript: 'Transcrição fornecida', videoSrc: '/relato.mp4', poster: '/capa.webp', captionsSrc: '/legendas.vtt' } });
   assert.equal(ready.track.children.length, 5);
-  assert.equal(ready.preview.hidden, false);
   const card = ready.track.children[0];
   assert.equal(card.querySelector('.testimonial-poster').src, 'https://visitae.example/capa.webp');
   assert.equal(card.querySelector('.testimonial-identity').children[1].textContent, 'Negócio autorizado');
@@ -139,6 +135,5 @@ test('public pages show illustrative cards with a notice; authorized entries rep
   assert.equal(card.querySelector('button'), null);
   const ids = ['ambientes', 'atendimento', 'google', 'captacao', 'entrega'];
   const allReal = mount('https://visitae.example/', Object.fromEntries(ids.map(id => [id, { authorized: true, client: 'Cliente autorizado', title: 'Título real', summary: 'Resumo real', transcript: 'Transcrição fornecida', videoSrc: '/relato.mp4', poster: '/capa.webp', captionsSrc: '/legendas.vtt' }])));
-  assert.equal(allReal.preview.hidden, true);
   assert.equal(allReal.track.children.length, 5);
 });

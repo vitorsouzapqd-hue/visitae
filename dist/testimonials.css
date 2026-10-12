@@ -1,10 +1,7 @@
-/* Fictional prototype portraits and quotes stay visibly labeled until replaced. */
+/* Illustrative testimonial cards and carousel. */
 .testimonials-section { background: #eeeee5; border-block: 1px solid var(--line); }
 .testimonials-heading { margin-bottom: 26px; }
 .testimonials-heading > p { max-width: 330px; }
-.testimonials-preview { display: flex; align-items: baseline; gap: 11px; margin-bottom: 32px; color: var(--muted); font-size: 12px; line-height: 1.6; max-width: 850px; }
-.testimonials-preview .status-dot { flex: 0 0 6px; width: 6px; height: 6px; background: #717d4d; }
-.testimonials-preview strong { color: var(--ink); font-weight: 650; }
 .testimonials-track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 48px) / 3); gap: 24px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: #aeb5a2 transparent; padding: 6px 0 20px; position: relative; }
 .testimonials-track:focus-visible { outline-offset: 8px; }
 .testimonial-card { display: flex; flex-direction: column; background: var(--paper); border: 1px solid #d5d9cb; border-radius: 12px; overflow: hidden; scroll-snap-align: start; min-width: 0; }
@@ -43,7 +40,6 @@
 @media (max-width: 719px) {
   .testimonials-heading { gap: 22px; margin-bottom: 24px; }
   .testimonials-heading > p { max-width: 460px; }
-  .testimonials-preview { font-size: 11px; margin-bottom: 23px; }
   .testimonials-track { grid-auto-columns: 86%; gap: 16px; padding-bottom: 14px; }
   .testimonial-cover { padding: 18px; }
   .testimonial-card-body { padding: 22px 20px; }

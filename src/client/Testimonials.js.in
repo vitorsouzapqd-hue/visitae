@@ -4,7 +4,7 @@
   const section = document.querySelector('#depoimentos');
   if (!section) return;
   const configured = window.SITE_TESTIMONIALS || {};
-  // Illustrative cards are available in every environment and identified by the section notice.
+  // Illustrative cards are available in every environment.
   const topics = {{testimonialTopics}};
   const safeMedia = value => {
     if (typeof value !== 'string' || !value.trim()) return '';
@@ -28,8 +28,6 @@
   }).filter(Boolean);
   section.hidden = items.length === 0;
   if (!items.length) return;
-  const preview = section.querySelector('#testimonials-preview');
-  if (preview) preview.hidden = !items.some(item => !item.ready);
   const track = section.querySelector('.testimonials-track');
   const dots = section.querySelector('.testimonials-dots');
   const previous = section.querySelector('.testimonial-prev');

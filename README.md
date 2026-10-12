@@ -2,7 +2,7 @@
 
 ## Depoimentos — apresentação atual
 
-Os cards têm frases de impacto maiores e mais fortes, seguidas de nome e negócio em texto discreto. As fotos são mais baixas e os controles de player, o botão “Ler relato” e o diálogo foram retirados por enquanto. A seção está disponível em arquivos locais, no servidor de desenvolvimento e em endereços públicos, sem flag ou restrição de domínio. Os badges dos cards foram removidos; o aviso geral “Prévia ilustrativa” identifica os personagens e falas fictícios. Os cinco relatos completos continuam preservados nos dados e no histórico, com as fotos e a navegação do carrossel.
+Os cards têm frases de impacto maiores e mais fortes, seguidas de nome e negócio em texto discreto. As fotos são mais baixas e os controles de player, o botão “Ler relato” e o diálogo foram retirados por enquanto. A seção está disponível em arquivos locais, no servidor de desenvolvimento e em endereços públicos, sem flag ou restrição de domínio. Os badges dos cards e o aviso geral “Prévia ilustrativa” foram removidos a pedido do usuário. Os cinco relatos completos continuam preservados nos dados e no histórico, com as fotos e a navegação do carrossel.
 
 ## Depoimentos recuperados — histórico
 
@@ -137,13 +137,13 @@ Os botões dos pacotes preenchem respectivamente “Tour Essencial”, “Tour C
 
 ## Relatos: disponibilidade e identificação
 
-A seção é renderizada em todos os ambientes, inclusive no endereço hospedado quando ele receber estes arquivos. A restrição por domínio e a flag `demoTestimonials` foram removidas a pedido do usuário. Os personagens, retratos e relatos fictícios são identificados pelo aviso geral “Prévia ilustrativa”; os cards não têm badge. Não são prova de clientes atendidos.
+A seção é renderizada em todos os ambientes, inclusive no endereço hospedado quando ele receber estes arquivos. A restrição por domínio e a flag `demoTestimonials` foram removidas a pedido do usuário. Os personagens, retratos e relatos continuam fictícios e não são prova de clientes atendidos. O aviso geral e os badges foram removidos a pedido do usuário.
 
 Os cinco cartões funcionam por controles, rolagem, toque e teclado. Player e leitura expandida estão removidos por enquanto.
 
 Relatos reais podem substituir os exemplos correspondentes em `window.SITE_TESTIMONIALS`, pelas chaves `ambientes`, `atendimento`, `google`, `captacao` e `entrega`. A validação original foi preservada: cada entrada precisa conter `authorized: true`, `client`, `title`, `summary`, `transcript`, `videoSrc`, `poster` e `captionsSrc`. As legendas devem ser WebVTT no mesmo domínio. `role`, `business` e `service` podem identificar dados reais adicionais; não são preenchidos com a identidade fictícia. Entradas incompletas ou não autorizadas não substituem o exemplo ilustrativo.
 
-Entradas reais exibem foto e texto, sem reprodução de vídeo. O aviso geral fica visível enquanto houver exemplos fictícios e desaparece quando todos forem substituídos por relatos reais completos e autorizados.
+Entradas reais exibem foto e texto, sem reprodução de vídeo.
 
 ## Referências preservadas
 

@@ -1,5 +1,19 @@
 # Visitaê
 
+## Rodapé — presença digital provisória
+
+Apresentação compacta: logo oficial em 31 px e slogan de apoio em DM Sans 15 px, reduzido para 14 px no celular, sem quebra forçada. No mobile, a ordem de leitura é marca, presença digital e navegação em duas colunas; créditos, retorno ao início e copyright ficam na faixa final. Títulos, links secundários e avisos têm pesos distintos. No desktop, a disposição das três colunas permanece marca, navegação e presença digital. Os links mantêm alvos de toque de 44 px.
+
+O rodapé tem identidade, navegação para seções existentes e presença digital. Os endereços planejados ficam centralizados em `src/data/footer-channels.mjs`, com `enabled: false` para cada canal: aparecem como texto e não geram links. Depois de confirmar o controle do site ou Instagram, altere o `enabled` correspondente para `true` e execute `npm run build`. A ativação é independente por canal; o Instagram ativo abre em nova aba com `noopener noreferrer`.
+
+Estrutura: `src/layout/Footer.mjs`. Estilos: `src/styles/Footer.css`, com a paleta aprovada neste pedido limitada ao rodapé. O logotipo compartilhado, o slogan “A visita começa antes da chegada.”, o retorno ao início e o diálogo de créditos e privacidade foram preservados. O ano é calculado na compilação e atualizado pelo comportamento existente no navegador.
+
+## Revista de Ativação
+
+A seção `#revista` fica imediatamente antes das soluções, com a copy aprovada e o PNG original em `dist/assets/revista-ativacao-visitae.png`. O guia impresso é apresentado como parte da contratação do tour, sem preços adicionais, promessas de resultado ou outro botão de compra. No desktop, a revista aparece à esquerda; até 899 px, a ordem é apresentação, revista e benefícios. A imagem mantém suas dimensões proporcionais, sem recorte.
+
+Edite `src/sections/ActivationMagazine.mjs` e `src/styles/ActivationMagazine.css`. A compilação publica o CSS separado em `dist/activation-magazine.css`. A paleta aprovada neste brief — fundo `#26352D`, texto `#F3F1E8` e detalhes `#C7DD59` — é local à seção; os tokens e estilos das outras seções permanecem preservados. A amostra correspondente está no Design System.
+
 ## Depoimentos — apresentação atual
 
 Os cards têm frases de impacto maiores e mais fortes, seguidas de nome e negócio em texto discreto. As fotos são mais baixas e os controles de player, o botão “Ler relato” e o diálogo foram retirados por enquanto. A seção está disponível em arquivos locais, no servidor de desenvolvimento e em endereços públicos, sem flag ou restrição de domínio. Os badges dos cards e o aviso geral “Prévia ilustrativa” foram removidos a pedido do usuário. Os cinco relatos completos continuam preservados nos dados e no histórico, com as fotos e a navegação do carrossel.
@@ -89,7 +103,7 @@ Limites do comando 3: não foi executado Lighthouse nem medição de Core Web Vi
 - Estilos e pontos de reorganização consolidados em `dist/styles.css`, removendo as antigas camadas de ajustes responsivos. Texto principal entre 16 e 17 px; informações de apoio entre 14 e 16 px; rótulos editoriais menores mantidos apenas para identificação. Entrelinha do corpo entre 1,55 e 1,65.
 - Abertura com leitura mais ampla, botões maiores e detalhe verde-lima separado do controle de entrada no tour. Visualizador generoso, legendas e abas legíveis; conteúdo lateral passa para baixo antes de apertar o tour.
 - Aplicações com categorias, perguntas e textos diferenciados. Prévia da Vila Terroir preservada e empilhada em larguras intermediárias para não encolher a apresentação do site. Google Maps permanece complementar, com ressalvas legíveis.
-- Três pacotes com o mesmo tratamento de entrada e botões claros, sem indicação de popularidade. Três colunas a partir de 1200 px; duas entre 900 e 1199 px, com Personalizado em faixa própria; uma abaixo de 900 px. Conteúdo e oferta mantidos.
+- Três pacotes com o mesmo tratamento de entrada e botões claros, sem indicação de popularidade. Três colunas a partir de 1200 px; duas entre 900 e 1199 px, com Sob Medida em faixa própria; uma abaixo de 900 px. Conteúdo e oferta mantidos.
 - Itálico preservado na abertura, demonstração, chamada final e outros momentos expressivos. Títulos de soluções, processo e FAQ receberam tratamento direto, sem repetir o mesmo recurso em toda a página.
 - Processo e fundador com proporções mais contidas; FAQ com estado aberto perceptível. Formulário com campos de 54 px, fonte de 16 px, rótulos e ajuda de 14 px, foco visível e bordas de erro, usando a validação existente.
 - `dist/testimonials.css` e apenas a ordem de apresentação dos elementos em `dist/testimonials.js` foram ajustados: frase → retrato e identidade → contexto → leitura. Cinco cards com alturas consistentes e modal com título livre da fotografia, leitura de 16 px e fechamento acessível durante a rolagem. Restrição à prévia local mantida.
@@ -123,7 +137,7 @@ Limites: as interfaces internas dos tours pertencem a terceiros. Vídeos reais d
 
 Abertura → demonstração → aplicações → página própria → Google Maps → relatos, somente quando elegíveis para exibição → soluções → processo → fundador → FAQ → formulário.
 
-Soluções: Visitaê Essencial, até 5 pontos de captação; Visitaê Completo, até 12 pontos e página própria; Visitaê Personalizado, sob avaliação. Não há preços publicados. A página informa contratação por projeto, ausência de acompanhamento mensal obrigatório e custos de domínio, hospedagem e plataformas apresentados separadamente.
+Soluções: Visitaê Essencial, até 5 pontos de captação; Visitaê Completo, até 12 pontos e página própria; Visitaê Sob Medida, sob avaliação. Não há preços publicados. A página informa contratação por projeto, ausência de acompanhamento mensal obrigatório e custos de domínio, hospedagem e plataformas apresentados separadamente.
 
 ## Contato
 
@@ -133,7 +147,7 @@ Nome do estabelecimento, UF e cidade são obrigatórios; bairro e Instagram/site
 
 `dist/assets/municipalities.json` contém 5.571 municípios nas 27 UFs, obtidos da API pública do IBGE em 11/10/2026. A lista é servida pelo próprio site; o que o visitante digita não é enviado ao IBGE.
 
-Os botões dos pacotes preenchem respectivamente “Tour Essencial”, “Tour Completo” e “Projeto Personalizado” antes de levar ao formulário. A opção de entender a melhor solução continua disponível.
+Os botões dos pacotes preenchem respectivamente “Tour Essencial”, “Tour Completo” e “Projeto Sob Medida” antes de levar ao formulário. A opção de entender a melhor solução continua disponível.
 
 ## Relatos: disponibilidade e identificação
 

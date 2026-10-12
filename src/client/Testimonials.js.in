@@ -42,6 +42,9 @@
     return node;
   };
 
+  // Head positions in each original sprite panel, as a percentage of its width.
+  // cqw follows the cover width; the remaining 12px keeps a small gap above the hair.
+  const portraitHeadOffsets = [20, 18, 16, 16, 21];
   items.forEach((item, index) => {
     const card = element('article', 'testimonial-card');
     card.setAttribute('role', 'group');
@@ -56,7 +59,7 @@
       image.loading = 'lazy';
     } else {
       image = element('div', 'testimonial-portrait-sprite');
-      image.style.backgroundPosition = `${item.portraitIndex * 25}% top`;
+      image.style.backgroundPosition = `${item.portraitIndex * 25}% calc(12px - ${portraitHeadOffsets[item.portraitIndex]}cqw)`;
       image.setAttribute('role', 'img');
       image.setAttribute('aria-label', `Personagem fictício: ${item.client}. Não é cliente real.`);
     }

@@ -6,6 +6,7 @@ import { Applications } from "./sections/Applications.mjs";
 import { OwnPageShowcase } from "./sections/OwnPageShowcase.mjs";
 import { GoogleMapsShowcase } from "./sections/GoogleMapsShowcase.mjs";
 import { Testimonials } from "./sections/Testimonials.mjs";
+import { ActivationMagazine } from "./sections/ActivationMagazine.mjs";
 import { Solutions } from "./sections/Solutions.mjs";
 import { Process } from "./sections/Process.mjs";
 import { Founder } from "./sections/Founder.mjs";
@@ -25,6 +26,7 @@ export const pageComponents = {
   OwnPageShowcase,
   GoogleMapsShowcase,
   Testimonials,
+  ActivationMagazine,
   Solutions,
   Process,
   Founder,

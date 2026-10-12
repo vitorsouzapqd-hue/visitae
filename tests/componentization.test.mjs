@@ -12,30 +12,52 @@ const read = path => readFileSync(new URL(path, root), 'utf8');
 const hash = value => createHash('sha256').update(value).digest('hex');
 const baseline = JSON.parse(read('tests/fixtures/original-files.json'));
 
-test('assembled page preserves the original outside testimonials and the requested copy edits', () => {
+test('assembled page preserves the original outside the footer, magazine, testimonials and requested copy edits', () => {
   const withoutTestimonials = html => html
+    .replace(/<footer class="site-footer[\s\S]*?<\/footer>/, '<!-- footer -->')
     .replace(/<section class="testimonials-section[\s\S]*?<\/section>/, '<!-- testimonial section -->')
     .replace(/^[ \t]*<dialog class="testimonial-dialog"[\s\S]*?<\/dialog>\n?/m, '');
   const expected = read('tests/fixtures/original-index.html')
-    .replace('testimonials.js?v=visitae-relatos-visiveis', 'testimonials.js?v=visitae-retratos-enquadrados')
-    .replace('testimonials.css?v=visitae-3', 'testimonials.css?v=visitae-ajustes-marcados')
+    .replace('testimonials.js?v=visitae-relatos-visiveis', 'testimonials.js?v=visitae-retratos-com-folga')
+    .replace('testimonials.css?v=visitae-3', 'testimonials.css?v=visitae-depoimentos-cta')
+    .replace('styles.css?v=visitae-tour-tabs', 'styles.css?v=visitae-rodape-hierarquia-mobile')
     .replace('config.js?v=visitae-relatos-visiveis', 'config.js?v=visitae-relatos-sem-aviso')
     .replace('app.js?v=visitae-header-cta', 'app.js?v=visitae-legendas-removidas')
     .replace('Seu espaço merece ser explorado.', 'A visita começa antes da chegada.')
+    .replace('</span> PERSONALIZADO</span>', '</span> SOB MEDIDA</span>')
+    .replaceAll('Projeto Personalizado', 'Projeto Sob Medida')
+    .replace('Agora, imagine seus clientes explorando <em>o seu espaço.</em>', 'Não faça seus clientes imaginarem como é o seu espaço. <em>Deixe que entrem.</em>')
+    .replace('Você já viu como funciona uma visita virtual 360.', 'Você já viu como uma visita virtual 360° permite conhecer um lugar por dentro, antes mesmo de chegar até ele.')
+    .replace('Agora, queremos conhecer seu estabelecimento.', '<strong>Agora, essa experiência pode começar no seu estabelecimento.</strong>')
+    .replace('Conte para a Visitaê onde fica seu espaço, quais ambientes deseja apresentar e como gostaria que seus clientes o conhecessem.', 'Conte para a Visitaê onde fica seu negócio, quais ambientes deseja apresentar e como gostaria que seus clientes os conhecessem.')
+    .replace('Vamos avaliar seu projeto e indicar a solução que faz mais sentido para ele.', 'Com essas informações, vamos entender as necessidades do seu projeto e indicar a solução que faz mais sentido para o seu espaço.')
+    .replaceAll('<span class="brand-name" aria-label="Visitaê">VISIT<span>AÊ</span></span>', '<span class="brand-name" aria-label="Visitaê">Visit<span>aê</span></span>')
+    .replace('<p class="solutions-common">Em todos os tours: captação presencial, tratamento das imagens, montagem da experiência, link para compartilhar e orientações de uso.</p>', '')
     .replace('<p class="form-note" id="form-note">Você continuará a conversa pelo WhatsApp, sem compromisso.</p>', '')
     .replace('<p class="solutions-complement">Precisa de uma página própria, mas seu espaço comporta o Tour Essencial? Podemos avaliar a página como um complemento ao projeto.</p>', '')
     .replace('<p class="asset-caption">Palace Hall · Tour produzido pela Tour Brasil360.</p>', '')
+    .replace('<a class="text-link" href="https://maps.app.goo.gl/wMfgnJ47d7WYYSRbA" target="_blank" rel="noopener noreferrer">Ver um exemplo no Google Maps <svg class="icon" aria-hidden="true"><use href="#arrow-up"/></svg></a>', '')
+    .replace('<p class="small-note">A publicação depende das regras e da elegibilidade do Google, sem garantia de aprovação, posicionamento ou permanência das imagens. Imóveis individuais de temporada, por exemplo, possuem restrições.</p>', '')
     .replace('        <p class="asset-caption">Holm Hotel · Tour produzido pela Clear Pano.</p>\n', '')
     .replace('        <p class="demo-attribution" id="demo-attribution">Holm Hotel · Tour produzido pela Clear Pano.</p>\n', '')
     .replace(' Projeto conceitual, não realizado para cliente.', '');
-  assert.equal(withoutTestimonials(read('dist/index.html')), withoutTestimonials(expected));
-  assert.equal(Object.keys(pageComponents).length, 17);
+  const existingPage = read('dist/index.html')
+    .replace(/    <section class="activation-section[\s\S]*?<\/section>\n\n/, '')
+    .replace('  <link rel="stylesheet" href="activation-magazine.css?v=visitae-revista-frase">\n', '');
+  assert.equal(withoutTestimonials(existingPage), withoutTestimonials(expected));
+  assert.equal(Object.keys(pageComponents).length, 18);
 });
 
 test('unrelated styles, fonts, portraits, illustrations, municipal data and prepared UI modules are byte identical', () => {
   for (const [path, expected] of Object.entries(baseline)) {
     if (['app.js', 'config.js', 'testimonials.js', 'testimonials.css'].includes(path)) continue;
-    assert.equal(hash(readFileSync(new URL(`dist/${path}`, root))), expected, path);
+    if (path === 'styles.css') {
+      const unrelated = read('dist/styles.css')
+        .replace(read('src/styles/Footer.css'), read('tests/fixtures/original-footer.css'))
+        .replace('.brand-name { color:var(--ink); white-space:nowrap; font-family:var(--display); font-weight:700; line-height:1; letter-spacing:-.065em; }', '.brand-name { color:var(--ink); white-space:nowrap; }')
+        .replace('/* Optical weight requested for this title; Instrument Serif keeps its real 400 weight. */\n.personal-copy h2 em { font-weight:400; font-synthesis:none; -webkit-text-stroke:.3px currentColor; }\n', '');
+      assert.equal(hash(unrelated), expected, path);
+    } else assert.equal(hash(readFileSync(new URL(`dist/${path}`, root))), expected, path);
   }
 });
 

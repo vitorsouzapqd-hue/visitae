@@ -3,6 +3,8 @@
 .personal-mark > span { position:relative; z-index:1; font:600 128px/.9 var(--display); letter-spacing:-.15em; padding-right:22px; }
 .personal-mark svg { position: absolute; width: 100%; max-width: 330px; fill: none; stroke: #738b3c; stroke-width: 1; }
 .personal-copy h2 { font-size:42px; }
+/* Optical weight requested for this title; Instrument Serif keeps its real 400 weight. */
+.personal-copy h2 em { font-weight:400; font-synthesis:none; -webkit-text-stroke:.3px currentColor; }
 .personal-copy > p:not(.eyebrow) { margin-top:22px; font-size:16px; line-height:1.6; color:#58604f; max-width:66ch; }
 .personal-copy > p + p:not(.eyebrow) { margin-top: 12px; }
 .personal-copy .text-link { margin-top: 15px; }

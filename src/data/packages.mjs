@@ -27,13 +27,13 @@ export const packages = [
   {
     "className": "solution",
     "number": "03",
-    "label": "PERSONALIZADO",
+    "label": "SOB MEDIDA",
     "heading": "Seu espaço precisa de um projeto maior?",
     "descriptionHtml": "Para estabelecimentos com muitos ambientes ou necessidades específicas, definimos a captação e as entregas conforme o projeto.",
     "featuresHtml": null,
     "additionalHtml": [],
-    "buttonAttributes": " class=\"button button-outline\" href=\"#contato\" data-solution=\"Projeto Personalizado\"",
+    "buttonAttributes": " class=\"button button-outline\" href=\"#contato\" data-solution=\"Projeto Sob Medida\"",
     "buttonHtml": "Conversar sobre meu projeto <svg class=\"icon\" aria-hidden=\"true\"><use href=\"#arrow-up\"/></svg>",
-    "solution": "Projeto Personalizado"
+    "solution": "Projeto Sob Medida"
   }
 ];

@@ -1,5 +1,5 @@
 .brand { display:inline-flex; align-items:center; min-height:44px; font:700 31px/1 var(--display); letter-spacing:-.065em; white-space:nowrap; }
-.brand-name { color:var(--ink); white-space:nowrap; }
+.brand-name { color:var(--ink); white-space:nowrap; font-family:var(--display); font-weight:700; line-height:1; letter-spacing:-.065em; }
 .brand-name > span { color:#61751B; }
 .brand-name-on-dark, .demo-section .brand-name { color:var(--paper); }
 .brand-name-on-dark > span, .demo-section .brand-name > span { color:var(--lime); }

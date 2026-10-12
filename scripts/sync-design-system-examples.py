@@ -56,7 +56,7 @@ class Source(HTMLParser):
 parsed = Source(source)
 svg = parsed.get(tag='svg', class_name='svg-library')
 fonts = next(tag for tag in re.findall(r'<link\b[^>]+>', source) if 'fonts.googleapis.com/css2?' in tag)
-head = f'''<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="dist/index.html"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>{fonts}<link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="testimonials.css"><style>body{{padding:24px}}body[data-component-example="navigation"]{{padding:0}}</style>'''
+head = f'''<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="dist/index.html"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>{fonts}<link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="testimonials.css"><link rel="stylesheet" href="activation-magazine.css"><style>body{{padding:24px}}body[data-component-example="navigation"]{{padding:0}}</style>'''
 bootstrap = '<script type="module" src="../documentation/design-system-examples.mjs"></script>'
 examples = []
 
@@ -73,12 +73,14 @@ example('botoes', 'buttons', 'Botões e links reais', '<div style="display:flex;
 example('badge', 'badge', 'Badge original', parsed.get(tag='p', class_name='hero-badge'), 100, 'Mesmo texto, tamanho, borda, fundo e espaçamento.')
 example('barra', 'sharing', 'Faixa e ícones de compartilhamento', parsed.get(tag='div', class_name='channel-strip'), 130, 'Instagram, WhatsApp, Seu site e Google Maps com os vetores originais.')
 example('cards', 'applications', 'Cards de aplicações', parsed.get(tag='section', id='possibilidades'), 800, 'Os três cards reais, com sua composição e copy preservadas.')
-example('cards', 'solutions', 'Cards de soluções', parsed.get(tag='section', id='solucoes'), 900, 'Essencial, Completo e Personalizado; layout responsivo original.')
+example('cards', 'solutions', 'Cards de soluções', parsed.get(tag='section', id='solucoes'), 900, 'Essencial, Completo e Sob Medida; layout responsivo original.')
 example('depoimentos', 'carousel', 'Carrossel interativo — cinco relatos', parsed.get(tag='section', id='depoimentos'), 850, 'Frases em destaque, nome e negócio discretos. Navegue pelos cinco exemplos fictícios, sem player ou leitura expandida.', '<script src="config.js" defer></script><script src="testimonials.js" defer></script>')
+example('revista-ativacao', 'activation-magazine', 'Revista de Ativação Visitaê', parsed.get(tag='section', id='revista'), 1100, 'Incluída na contratação do tour. PNG original inteiro, benefícios em linhas e ordem adaptada ao celular.')
 example('modais', 'dialog', 'Dialog — créditos e privacidade', parsed.get(tag='button', id='credits-open') + parsed.get(tag='dialog', id='credits-dialog'), 520, 'Clique para abrir. Experimente Escape, foco e fechamento pelo backdrop.')
 example('formulario', 'fields', 'Input, Select e Label — formulário real', parsed.get(tag='form', id='contact-form'), 1000, 'Selecione a UF e pesquise a cidade. O exemplo valida os campos sem enviar dados.', '<script src="locations.js" defer></script>')
 example('faq', 'accordion', 'Accordion — perguntas reais', parsed.get(tag='div', class_name='faq-list'), 850, 'Abra as respostas por clique, Enter ou Espaço. Conteúdo original completo.')
 example('composicoes', 'navigation', 'Navigation — header e menu móvel', parsed.get(tag='header', class_name='site-header'), 380, 'Prévia com 390 px: abra o menu e feche com Escape; CTA de orçamento preservado.')
+example('composicoes', 'footer', 'Rodapé — identidade e presença digital', parsed.get(tag='footer', class_name='site-footer') + parsed.get(tag='dialog', id='credits-dialog'), 420, 'No celular: marca, presença digital e navegação em duas colunas. Endereços provisórios sem links; créditos e retorno ao início na faixa final.')
 
 path = ROOT / 'design-system.html'
 document = path.read_text(encoding='utf-8')

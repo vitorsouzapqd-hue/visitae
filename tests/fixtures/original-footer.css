@@ -1,0 +1,7 @@
+.site-footer { padding-block: 42px 24px; }
+.footer-top { display: flex; justify-content: space-between; align-items: center; gap: 30px; padding-bottom: 35px; }
+.footer-top > p { font-size:14px; line-height:1.6; margin-right:auto; margin-left:36px; color:var(--muted); max-width:34ch; }
+.footer-top .text-link { font-size:15px; }
+.footer-bottom { border-top:1px solid var(--line); padding-top:20px; display:flex; align-items:center; justify-content:space-between; gap:24px; font-size:14px; line-height:1.5; color:var(--muted); }
+.footer-button { display:flex; align-items:center; min-height:44px; background:transparent; padding:0; color:var(--muted); font-size:14px; text-decoration:underline; text-underline-offset:4px; flex-shrink:0; }
+.mobile-contact { display: none; }

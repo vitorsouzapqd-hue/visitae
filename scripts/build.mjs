@@ -20,6 +20,7 @@ mkdirSync(new URL('dist/ui/', root), { recursive: true });
 write('dist/index.html', replaceSlots(read('src/index.html'), pageComponents));
 write('dist/styles.css', styleOrder.map(name => read(`src/styles/${name}`)).join(''));
 write('dist/testimonials.css', read('src/styles/Testimonials.css'));
+write('dist/activation-magazine.css', read('src/styles/ActivationMagazine.css'));
 write('dist/app.js', replaceSlots(clientOrder.map(name => read(`src/client/${name}`)).join(''), { tours: scriptData(tours) }));
 write('dist/testimonials.js', replaceSlots(read('src/client/Testimonials.js.in'), { testimonialTopics: scriptData(testimonialTopics) }));
 write('dist/locations.js', read('src/client/Locations.js'));

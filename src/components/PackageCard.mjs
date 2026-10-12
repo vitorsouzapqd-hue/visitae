@@ -2,7 +2,7 @@ import { BrandLogo } from './BrandLogo.mjs';
 import { Button } from './Button.mjs';
 
 export function PackageCard(item) {
-  const logo = BrandLogo({ attributes: ' class="brand-name" aria-label="Visitaê"', uppercase: true });
+  const logo = BrandLogo({ attributes: ' class="brand-name" aria-label="Visitaê"', uppercase: false });
   const features = item.featuresHtml === null ? '' : `<ul class="check-list">${item.featuresHtml}</ul>`;
   const additional = item.additionalHtml.map(text => `<p class="solution-additional">${text}</p>`).join('\n');
   const cta = Button({ tag: 'a', attributes: item.buttonAttributes, content: item.buttonHtml });

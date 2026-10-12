@@ -1,5 +1,11 @@
 # Visitaê
 
+## Depoimentos recuperados
+
+A apresentação com fotos grandes foi recuperada do commit `52bd8f69af833b8f5f93bd95d42a58cee87a8116` do projeto original: capas 4:5, nomes sobre a imagem, identificação “EXEMPLO FICTÍCIO” e aviso “Prévia ilustrativa”. Os mesmos cinco retratos, os textos completos atuais, o carrossel e o diálogo de leitura foram preservados. A recuperação modifica somente esta seção e seu exemplo no Design System.
+
+Para ver a prévia, abra `dist/index.html` como arquivo local ou use `npm run dev`. Os relatos fictícios exigem a flag e um arquivo local ou endereço de loopback; permanecem ocultos em endereços públicos. Os botões abrem o relato completo, sem simular reprodução de vídeos inexistentes. A procedência dos estilos e a preservação dos comportamentos são verificadas pelos testes.
+
 ## Componentização — etapa 4
 
 A aplicação continua em HTML, CSS e JavaScript nativos, sem dependências novas. Edite `src/`; `npm run build` monta os arquivos estáticos em `dist/`, mantendo o contrato de hospedagem existente. `npm run dev` compila e serve em `http://127.0.0.1:5173`. Reexecute a compilação após editar os componentes; não há servidor de atualização automática.
@@ -20,7 +26,7 @@ Verificação: `npm run check` compila e verifica a sintaxe; `npm test` compila 
 
 `design-system.html` carrega os mesmos arquivos CSS e o mesmo endereço de fontes da landing. A prévia incorporada abre o próprio `dist/index.html`; os componentes simplificados da documentação anterior foram substituídos por essa referência real. As 17 seções documentam os valores implementados e as decisões pendentes, sem alterar a aplicação.
 
-O arquivo aprovado foi preservado nesta refatoração. Seus trechos isolados e notas anteriores ao título de localização e à restrição de relatos continuam registrados; para essas duas decisões, consulte a etapa 4 acima. A prévia principal já exibe a aplicação atual compilada.
+As demais seções do arquivo aprovado foram preservadas; o exemplo e as notas de depoimentos acompanham a recuperação acima. Os trechos anteriores ao título de localização continuam registrados; para essa decisão, consulte a etapa 4 acima. A prévia principal já exibe a aplicação atual compilada.
 
 As seções também contêm 11 exemplos visíveis extraídos do HTML original: tipografia, botões, badge, faixa e ícones, cards de aplicações e soluções, carrossel com cinco relatos, diálogo, formulário, FAQ e menu móvel. Os exemplos usam os mesmos estilos e fontes em documentos isolados. O carrossel executa os scripts originais; a busca municipal usa `locations.js`; o formulário documental bloqueia o envio. Para atualizar os trechos após mudanças no site, execute `python scripts/sync-design-system-examples.py`.
 
@@ -44,7 +50,7 @@ Origem efetivamente importada: `C:/Users/Vítor Velame/.codex/visualizations/202
 
 Na pasta deste projeto, execute `npm run dev` e acesse `http://127.0.0.1:5173`. Encerre com Ctrl+C. Node.js e Python já estão disponíveis no ambiente local; nenhuma dependência precisa ser instalada.
 
-Na importação, `dist/` continha os arquivos originais editados diretamente e foi preservado byte a byte. Após a etapa 4, os arquivos de entrega são montados a partir de `src/`; as imagens e a base municipal permanecem em `dist/assets/`. O HTML completo continua igual, exceto pelo título de localização e pela atualização do endereço de cache do script que restringe os relatos fictícios.
+Na importação, `dist/` continha os arquivos originais editados diretamente e foi preservado byte a byte. Após a etapa 4, os arquivos de entrega são montados a partir de `src/`; as imagens e a base municipal permanecem em `dist/assets/`. Fora da seção de depoimentos recuperada, o HTML completo continua igual, exceto pelo título de localização e pelos endereços de cache dos recursos atualizados.
 
 Fontes e demonstrações externas continuam usando os endereços originais e precisam de conexão para carregar. O manifesto de hospedagem original foi preservado; esta importação não publica nem altera a hospedagem. As seções abaixo registram o histórico original, inclusive configurações anteriores.
 
@@ -129,7 +135,7 @@ Os botões dos pacotes preenchem respectivamente “Tour Essencial”, “Tour C
 
 `window.SITE_CONFIG.demoTestimonials` é **false** na versão enviada à hospedagem. A seção começa oculta no HTML. Os personagens, retratos e relatos fictícios não são prova de clientes atendidos e não são renderizados no endereço hospedado.
 
-Para uma prévia de desenvolvimento, habilite a flag apenas na configuração local e sirva a página por `localhost`, `127.0.0.1` ou `[::1]`. A simulação exige simultaneamente a flag e um desses endereços. Parâmetros da URL não ativam a simulação. Mesmo que a flag seja alterada para true por engano na hospedagem, a restrição de endereço impede a exibição dos relatos fictícios. Reponha false antes de publicar.
+Para uma prévia de desenvolvimento, habilite a flag apenas na configuração local e abra o arquivo local ou sirva a página por `localhost`, `127.0.0.1` ou `[::1]`. A simulação exige simultaneamente a flag e um desses contextos locais. Parâmetros da URL não ativam a simulação. Mesmo que a flag seja alterada para true por engano na hospedagem, a restrição de endereço impede a exibição dos relatos fictícios. Reponha false antes de publicar.
 
 A simulação mantém cinco cartões e janelas de leitura completa. O controle é “Ler relato”; não existe reprodução de vídeo fictício. O carrossel funciona por controles, rolagem, toque e teclado.
 

@@ -12,49 +12,49 @@ const read = path => readFileSync(new URL(path, root), 'utf8');
 const hash = value => createHash('sha256').update(value).digest('hex');
 const baseline = JSON.parse(read('tests/fixtures/original-files.json'));
 
-test('assembled page preserves the complete original HTML, except the two requested changes', () => {
+test('assembled page preserves the original outside the restored testimonial section and requested location title', () => {
+  const withoutTestimonials = html => html.replace(/<section class="testimonials-section[\s\S]*?<\/section>/, '<!-- testimonial section -->');
   const expected = read('tests/fixtures/original-index.html')
     .replace('<fieldset class="location-group">', '<fieldset class="location-group"><legend>Localização do estabelecimento</legend>')
-    .replace('testimonials.js?v=visitae-relatos-visiveis', 'testimonials.js?v=visitae-relatos-internos');
-  assert.equal(read('dist/index.html'), expected);
+    .replace('testimonials.js?v=visitae-relatos-visiveis', 'testimonials.js?v=visitae-capas-recuperadas')
+    .replace('testimonials.css?v=visitae-3', 'testimonials.css?v=visitae-capas-recuperadas');
+  assert.equal(withoutTestimonials(read('dist/index.html')), withoutTestimonials(expected));
   assert.equal(Object.keys(pageComponents).length, 18);
 });
 
-test('styles, fonts, portraits, illustrations, municipal data and prepared UI modules are byte identical', () => {
+test('unrelated styles, fonts, portraits, illustrations, municipal data and prepared UI modules are byte identical', () => {
   for (const [path, expected] of Object.entries(baseline)) {
-    if (['app.js', 'config.js', 'testimonials.js'].includes(path)) continue;
+    if (['app.js', 'config.js', 'testimonials.js', 'testimonials.css'].includes(path)) continue;
     assert.equal(hash(readFileSync(new URL(`dist/${path}`, root))), expected, path);
   }
 });
 
-test('existing client behavior is preserved after extracting tour data and internal-demo gating', () => {
+test('existing tour and contact behavior is preserved after extracting tour data', () => {
   const app = read('dist/app.js');
   const start = app.indexOf('const demos = ') + 'const demos = '.length;
   const end = app.indexOf(';\n', start);
   const dataSource = read('src/data/tours.mjs');
   const originalExpression = dataSource.slice(dataSource.indexOf('export const tours = ') + 'export const tours = '.length).trim().slice(0, -1);
   assert.equal(hash(app.slice(0, start) + originalExpression + app.slice(end)), baseline['app.js']);
-  const originalTestimonials = read('dist/testimonials.js').replace(
-    /\/\/ Internal demonstrations require both the flag and a loopback address\.[\s\S]*?const demoEnabled = [^;]+;/,
-    '// Illustrative prototype stories are explicitly enabled by configuration.\n  const demoEnabled = window.SITE_CONFIG?.demoTestimonials === true;');
-  assert.equal(hash(originalTestimonials), baseline['testimonials.js']);
 });
 
 test('public demos are blocked even with the flag; authorized real media remains eligible', () => {
   const source = read('dist/testimonials.js');
   // Execute the real configuration/eligibility path before the DOM rendering boundary.
   const prefix = source.slice(source.indexOf('  const configured'), source.indexOf('  section.hidden'));
-  function eligible(url, flag = true, configured = {}) {
-    const context = vm.createContext({ URL, document: { baseURI: url }, location: new URL(url), window: { SITE_CONFIG: { demoTestimonials: flag }, SITE_TESTIMONIALS: configured } });
+  function eligible(url, flag = true, configured = {}, locationURL = url) {
+    const context = vm.createContext({ URL, document: { baseURI: url }, location: new URL(locationURL), window: { SITE_CONFIG: { demoTestimonials: flag }, SITE_TESTIMONIALS: configured } });
     return vm.runInContext(`${prefix}\nitems`, context);
   }
-  for (const url of ['https://visitae.example/', 'https://localhost.example/', 'https://visitae.example/?demoTestimonials=true', 'file:///C:/Site/index.html']) {
+  for (const url of ['https://visitae.example/', 'https://localhost.example/', 'https://visitae.example/?demoTestimonials=true']) {
     assert.equal(eligible(url).length, 0, url);
   }
-  for (const url of ['http://localhost:5173/', 'http://127.0.0.1:5173/', 'http://[::1]:5173/']) {
+  for (const url of ['http://localhost:5173/', 'http://127.0.0.1:5173/', 'http://[::1]:5173/', 'file:///C:/Site/index.html']) {
     assert.deepEqual(Array.from(eligible(url), item => item.client), ['Marina', 'Rafael', 'André', 'Camila', 'Renata']);
     assert.equal(eligible(url, false).length, 0);
   }
+  assert.equal(eligible('file:///C:/Site/dist/index.html', true, {}, 'about:srcdoc').length, 5);
+  assert.equal(eligible('https://visitae.example/', true, {}, 'about:srcdoc').length, 0);
   const authorized = { ambientes: { authorized: true, client: 'Cliente autorizado', title: 'Título fornecido', summary: 'Resumo fornecido', transcript: 'Transcrição fornecida', videoSrc: '/relato.mp4', poster: '/capa.webp', captionsSrc: '/legendas.vtt' } };
   const real = eligible('https://visitae.example/', true, authorized);
   assert.equal(real.length, 1);

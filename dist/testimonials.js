@@ -4,9 +4,10 @@
   const section = document.querySelector('#depoimentos');
   if (!section) return;
   const configured = window.SITE_TESTIMONIALS || {};
-  // Internal demonstrations require both the flag and a loopback address.
+  // Internal demonstrations require the flag and a local file or loopback address.
   // document.baseURI also supports the isolated local Design System samples.
-  const internalHost = ['localhost', '127.0.0.1', '[::1]'].includes(new URL(document.baseURI).hostname);
+  const localFile = location.protocol === 'file:' || (location.protocol === 'about:' && new URL(document.baseURI).protocol === 'file:');
+  const internalHost = localFile || ['localhost', '127.0.0.1', '[::1]'].includes(new URL(document.baseURI).hostname);
   const demoEnabled = window.SITE_CONFIG?.demoTestimonials === true && internalHost;
   const topics = [
   {
@@ -87,13 +88,8 @@
   }).filter(Boolean);
   section.hidden = items.length === 0;
   if (!items.length) return;
-  if (items.some(item => !item.ready)) {
-    const context = section.querySelector('.testimonials-heading > p');
-    const disclosure = document.createElement('strong');
-    disclosure.textContent = 'Relatos ilustrativos do protótipo, com personagens fictícios.';
-    context.prepend(disclosure, document.createElement('br'));
-    section.querySelector('#testimonials-title').innerHTML = 'Possibilidades na prática.<br><em>Veja os relatos.</em>';
-  }
+  const preview = section.querySelector('#testimonials-preview');
+  if (preview) preview.hidden = !items.some(item => !item.ready);
   const track = section.querySelector('.testimonials-track');
   const dots = section.querySelector('.testimonials-dots');
   const previous = section.querySelector('.testimonial-prev');
@@ -139,23 +135,23 @@
       image = element('div', 'testimonial-portrait-sprite');
       image.style.backgroundPosition = `${item.portraitIndex * 25}% center`;
       image.setAttribute('role', 'img');
-      image.setAttribute('aria-label', item.client);
+      image.setAttribute('aria-label', `Personagem fictício: ${item.client}. Não é cliente real.`);
     }
     const meta = element('div', 'testimonial-cover-meta');
-    meta.append(element('span', 'testimonial-video-label', item.ready ? 'DEPOIMENTO' : 'RELATO'));
+    meta.append(element('span', 'testimonial-video-label', item.ready ? 'DEPOIMENTO EM VÍDEO' : 'EXEMPLO FICTÍCIO'));
     const identity = element('div', 'testimonial-video-identity');
     identity.append(element('strong', '', item.client), element('span', '', item.role || ''));
     const play = element('button', 'testimonial-cover-play');
     play.type = 'button';
     play.setAttribute('aria-label', item.ready ? `Assistir ao depoimento de ${item.client}` : `Ler relato de ${item.client}`);
     play.setAttribute('aria-haspopup', 'dialog');
-    if (item.ready) play.append(icon('play'));
-    else { play.classList.add('is-reading'); play.textContent = 'Ler relato'; }
+    play.append(icon('play'));
     play.addEventListener('click', () => openItem(item, play));
-    const label = element('div', 'testimonial-media-label', item.ready ? 'Assistir ao depoimento' : 'Ler relato');
-    cover.append(image, meta, play, identity, label);
+    const label = element('div', 'testimonial-media-label');
+    label.append(element('span', '', item.ready ? 'Clique para assistir' : 'Prévia do player · vídeo a inserir'), play);
+    cover.append(image, meta, identity, label);
     const body = element('div', 'testimonial-card-body');
-    body.append(element('p', 'eyebrow', item.tag), element('h3', '', `“${item.title}”`), cover, element('p', 'testimonial-summary', item.summary));
+    body.append(element('p', 'eyebrow', item.tag), element('h3', '', `“${item.title}”`), element('p', 'testimonial-summary', item.summary));
     const details = element('div', 'testimonial-case-details');
     details.append(element('strong', '', item.business || item.client), element('span', '', item.service || 'Serviço 360'));
     const button = element('button', 'testimonial-open', item.ready ? 'Assistir ao depoimento' : 'Ler relato');
@@ -165,7 +161,7 @@
     button.append(icon(item.ready ? 'play' : 'arrow-up'));
     button.addEventListener('click', () => openItem(item, button));
     body.append(details, button);
-    card.append(body);
+    card.append(cover, body);
     track.append(card);
     const dot = element('button', 'testimonial-dot');
     dot.type = 'button';

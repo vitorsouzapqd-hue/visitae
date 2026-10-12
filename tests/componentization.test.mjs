@@ -12,15 +12,22 @@ const read = path => readFileSync(new URL(path, root), 'utf8');
 const hash = value => createHash('sha256').update(value).digest('hex');
 const baseline = JSON.parse(read('tests/fixtures/original-files.json'));
 
-test('assembled page preserves the original outside the restored testimonial section and requested location title', () => {
+test('assembled page preserves the original outside testimonials and the requested copy edits', () => {
   const withoutTestimonials = html => html
     .replace(/<section class="testimonials-section[\s\S]*?<\/section>/, '<!-- testimonial section -->')
     .replace(/^[ \t]*<dialog class="testimonial-dialog"[\s\S]*?<\/dialog>\n?/m, '');
   const expected = read('tests/fixtures/original-index.html')
-    .replace('<fieldset class="location-group">', '<fieldset class="location-group"><legend>Localização do estabelecimento</legend>')
     .replace('testimonials.js?v=visitae-relatos-visiveis', 'testimonials.js?v=visitae-retratos-enquadrados')
-    .replace('testimonials.css?v=visitae-3', 'testimonials.css?v=visitae-retratos-enquadrados')
-    .replace('config.js?v=visitae-relatos-visiveis', 'config.js?v=visitae-relatos-sem-aviso');
+    .replace('testimonials.css?v=visitae-3', 'testimonials.css?v=visitae-ajustes-marcados')
+    .replace('config.js?v=visitae-relatos-visiveis', 'config.js?v=visitae-relatos-sem-aviso')
+    .replace('app.js?v=visitae-header-cta', 'app.js?v=visitae-legendas-removidas')
+    .replace('Seu espaço merece ser explorado.', 'A visita começa antes da chegada.')
+    .replace('<p class="form-note" id="form-note">Você continuará a conversa pelo WhatsApp, sem compromisso.</p>', '')
+    .replace('<p class="solutions-complement">Precisa de uma página própria, mas seu espaço comporta o Tour Essencial? Podemos avaliar a página como um complemento ao projeto.</p>', '')
+    .replace('<p class="asset-caption">Palace Hall · Tour produzido pela Tour Brasil360.</p>', '')
+    .replace('        <p class="asset-caption">Holm Hotel · Tour produzido pela Clear Pano.</p>\n', '')
+    .replace('        <p class="demo-attribution" id="demo-attribution">Holm Hotel · Tour produzido pela Clear Pano.</p>\n', '')
+    .replace(' Projeto conceitual, não realizado para cliente.', '');
   assert.equal(withoutTestimonials(read('dist/index.html')), withoutTestimonials(expected));
   assert.equal(Object.keys(pageComponents).length, 17);
 });
@@ -32,13 +39,16 @@ test('unrelated styles, fonts, portraits, illustrations, municipal data and prep
   }
 });
 
-test('existing tour and contact behavior is preserved after extracting tour data', () => {
+test('existing tour and contact behavior is preserved after removing the inline credit update', () => {
   const app = read('dist/app.js');
   const start = app.indexOf('const demos = ') + 'const demos = '.length;
   const end = app.indexOf(';\n', start);
   const dataSource = read('src/data/tours.mjs');
   const originalExpression = dataSource.slice(dataSource.indexOf('export const tours = ') + 'export const tours = '.length).trim().slice(0, -1);
-  assert.equal(hash(app.slice(0, start) + originalExpression + app.slice(end)), baseline['app.js']);
+  const restored = (app.slice(0, start) + originalExpression + app.slice(end))
+    .replace("    $('#demo-external').href = demo.external;", "    $('#demo-attribution').textContent = demo.attribution;\n    $('#demo-external').href = demo.external;")
+    .replace("$('.demo-context'), $('.demo-bottom')", "$('.demo-context'), $('.demo-attribution'), $('.demo-bottom')");
+  assert.equal(hash(restored), baseline['app.js']);
 });
 
 test('illustrative cards are available in every environment; real media still requires authorization and complete data', () => {

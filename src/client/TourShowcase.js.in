@@ -69,7 +69,6 @@ function selectDemo(key, start = false) {
     $('#demo-name').textContent = demo.name;
     $('#demo-description').textContent = demo.description;
     $('#demo-question').textContent = demo.question;
-    $('#demo-attribution').textContent = demo.attribution;
     $('#demo-external').href = demo.external;
     $('#viewer-image').src = demo.cover;
     $('#viewer-image').alt = `Interior: ${demo.label}`;
@@ -133,7 +132,7 @@ $('.viewer-expand').addEventListener('click', () => {
   viewerWrap.setAttribute('role', 'dialog');
   viewerWrap.setAttribute('aria-modal', 'true');
   viewerWrap.setAttribute('aria-label', 'Tour ampliado');
-  inertNodes = [$('.site-header'), $('.site-footer'), $('#mobile-contact'), ...$$('main > section:not(#experimente)'), $('.channel-strip'), $('.demo-heading'), $('.demo-tabs'), $('.demo-context'), $('.demo-attribution'), $('.demo-bottom')].filter(Boolean).map(node => ({ node, wasInert: node.inert }));
+  inertNodes = [$('.site-header'), $('.site-footer'), $('#mobile-contact'), ...$$('main > section:not(#experimente)'), $('.channel-strip'), $('.demo-heading'), $('.demo-tabs'), $('.demo-context'), $('.demo-bottom')].filter(Boolean).map(node => ({ node, wasInert: node.inert }));
   inertNodes.forEach(({ node }) => { node.inert = true; });
   $('#viewer-close').hidden = false;
   $('#viewer-close').focus();

@@ -17,7 +17,6 @@ export function TourShowcase() {
           </div>
           <aside class="demo-context"><span class="demo-kind" id="demo-kind">TOUR PERSONALIZADO</span><h3 id="demo-name">Uma hospedagem. Outro jeito de conhecer.</h3><p id="demo-description">Uma foto mostra o quarto por um ângulo. Agora experimente olhar ao redor.</p><div class="demo-question"><span>O QUE ESSA EXPERIÊNCIA MOSTRA</span><p id="demo-question">&quot;Como é esse ambiente para além do enquadramento das fotos?&quot;</p></div></aside>
         </div>
-        <p class="demo-attribution" id="demo-attribution">Holm Hotel · Tour produzido pela Clear Pano.</p>
         <div class="demo-bottom"><p>Já imaginou seus clientes conhecendo seu espaço assim?</p>${Button({ tag: "a", attributes: " class=\"button button-lime\" href=\"#contato\"", content: `Quero um tour para meu espaço <svg class="icon" aria-hidden="true" focusable="false"><use href="#arrow-up"/></svg>` })}</div>
       </div>
     </section>`;

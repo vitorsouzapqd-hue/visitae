@@ -15,7 +15,7 @@ export function Testimonials() {
             <div class="testimonials-arrows"><span class="testimonials-status" role="status" aria-live="polite" aria-atomic="true"></span><button type="button" class="testimonial-arrow testimonial-prev" aria-label="Depoimento anterior" aria-controls="testimonials-track"><svg class="icon" aria-hidden="true" focusable="false"><use href="#arrow"/></svg></button><button type="button" class="testimonial-arrow testimonial-next" aria-label="Próximo depoimento" aria-controls="testimonials-track"><svg class="icon" aria-hidden="true" focusable="false"><use href="#arrow"/></svg></button></div>
           </div>
         </div>
-        <div class="testimonials-bottom"><p>Quer descobrir como essa experiência pode funcionar no seu estabelecimento?</p>${Button({ tag: "a", attributes: " class=\"text-link\" href=\"#contato\"", content: `Vamos conversar sobre seu espaço <svg class="icon" aria-hidden="true" focusable="false"><use href="#arrow-up"/></svg>` })}</div>
+        <div class="testimonials-bottom"><p>Quer descobrir como essa experiência pode funcionar no seu estabelecimento?</p>${Button({ tag: "a", attributes: " class=\"button button-dark\" href=\"#contato\"", content: `Vamos conversar sobre seu espaço <svg class="icon" aria-hidden="true" focusable="false"><use href="#arrow-up"/></svg>` })}</div>
       </div>
     </section>`;
 }

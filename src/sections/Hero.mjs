@@ -11,7 +11,6 @@ export function Hero() {
         <div class="hero-actions">${Button({ tag: "a", attributes: " class=\"button button-dark\" href=\"#experimente\" data-demo-start=\"hotel\"", content: `Experimentar um tour <svg class="icon" aria-hidden="true" focusable="false"><use href="#arrow-up"/></svg>` })}${Button({ tag: "a", attributes: " class=\"text-link\" href=\"#contato\"", content: `Quero isso para meu espaço <svg class="icon" aria-hidden="true" focusable="false"><use href="#arrow"/></svg>` })}</div>
       </div>
       <div class="hero-visual">
-        <p class="asset-caption">Holm Hotel · Tour produzido pela Clear Pano.</p>
         <button class="hero-tour" type="button" data-demo-start="hotel" aria-label="Explorar o Holm Hotel em 360">
           <img src="assets/tour-cover.webp" alt="Suíte do Holm Hotel no tour produzido pela Clear Pano" width="1179" height="664" fetchpriority="high">
           <span class="hero-photo-shade"></span>

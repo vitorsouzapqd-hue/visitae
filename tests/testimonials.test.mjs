@@ -8,13 +8,10 @@ const read = path => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8'
 const hash = value => createHash('sha256').update(value).digest('hex');
 const recovered = JSON.parse(read('tests/fixtures/recovered-testimonials.json'));
 
-test('large portrait/card CSS comes from the recoverable historical source; narratives and modal remain intact', () => {
-  const css = read('dist/testimonials.css');
-  assert.equal(hash(css.slice(0, css.indexOf('body.testimonial-opened'))), recovered.cardStylesSha256);
-  assert.equal(hash(css.slice(css.indexOf('body.testimonial-opened'), css.indexOf('@media (max-width: 1100px)'))), recovered.modalStylesSha256);
+test('compact cards preserve narratives, media eligibility and the existing carousel', () => {
   assert.equal(hash(read('src/data/testimonials.mjs')), recovered.preservedNarrativesSha256);
   const script = read('dist/testimonials.js');
-  assert.equal(hash(script.slice(script.indexOf('  const cards ='))), recovered.carouselAndDialogSha256);
+  assert.equal(hash(script.slice(script.indexOf('  const cards ='), script.lastIndexOf('  update();')).trimEnd()), recovered.carouselSha256);
   assert.equal(hash(script.slice(script.indexOf('  const safeMedia'), script.indexOf('  section.hidden'))), recovered.mediaEligibilitySha256);
 });
 
@@ -78,24 +75,18 @@ function mount(url = 'file:///C:/Site/dist/index.html', configured = {}, reduced
   const previous = add(section, 'button', 'testimonial-prev');
   const next = add(section, 'button', 'testimonial-next');
   const status = add(section, 'p', 'testimonials-status');
-  const dialog = new Element('dialog', doc, 'testimonial-dialog', 'testimonial-dialog');
-  for (const id of ['testimonial-player', 'testimonial-video-error', 'testimonial-captions-error', 'testimonial-dialog-label', 'testimonial-dialog-title', 'testimonial-dialog-intro', 'testimonial-client']) add(dialog, 'div', '', id);
-  const transcript = add(dialog, 'details', '', 'testimonial-transcript');
-  add(transcript, 'summary');
-  add(transcript, 'p');
-  add(dialog, 'button', 'testimonial-dialog-close');
-  doc.body.append(section, dialog);
+  doc.body.append(section);
   const context = vm.createContext({
     document: doc, location: new URL(url), URL, setTimeout, clearTimeout,
     window: { SITE_CONFIG: { demoTestimonials: true }, SITE_TESTIMONIALS: configured, matchMedia: () => ({ matches: reduced }) },
     ResizeObserver: class { constructor(callback) { doc.resize.push(callback); } observe() {} },
   });
   vm.runInContext(read('dist/testimonials.js'), context);
-  return { doc, section, preview, track, dots, previous, next, status, dialog, transcript };
+  return { doc, section, preview, track, dots, previous, next, status };
 }
 
-test('all five photos lead their cards, with fictional badges, names, carousel and full reading', () => {
-  const { doc, section, preview, track, dots, previous, next, status, dialog, transcript } = mount();
+test('five compact cards show the quote before name/business, without player or reading controls', () => {
+  const { doc, section, preview, track, dots, previous, next, status } = mount();
   assert.equal(section.hidden, false);
   assert.equal(preview.hidden, false);
   assert.equal(track.children.length, 5);
@@ -103,24 +94,24 @@ test('all five photos lead their cards, with fictional badges, names, carousel a
   assert.equal(status.textContent, '1–3 de 5');
   assert.equal(previous.disabled, true);
   assert.equal(next.disabled, false);
-  for (const [index, name] of ['Marina', 'Rafael', 'André', 'Camila', 'Renata'].entries()) {
+  const people = [['Marina', 'Casa de temporada'], ['Rafael', 'Espaço de eventos'], ['André', 'Barbearia'], ['Camila', 'Academia'], ['Renata', 'Estúdio de estética']];
+  for (const [index, [name, business]] of people.entries()) {
     const card = track.children[index];
     assert.equal(card.children[0].className, 'testimonial-cover');
     assert.equal(card.children[1].className, 'testimonial-card-body');
-    assert.equal(card.querySelector('.testimonial-video-identity').children[0].textContent, name);
+    const identity = card.querySelector('.testimonial-identity');
+    assert.equal(identity.children[0].textContent, name);
+    assert.equal(identity.children[1].textContent, business);
+    const body = card.children[1];
+    assert.ok(body.children.indexOf(body.querySelector('h3')) < body.children.indexOf(identity));
     assert.equal(card.querySelector('.testimonial-video-label').textContent, 'EXEMPLO FICTÍCIO');
     assert.equal(card.querySelector('.testimonial-portrait-sprite').style.backgroundPosition, `${index * 25}% center`);
-    const opener = card.querySelector('.testimonial-cover-play');
-    opener.emit('click');
-    assert.equal(dialog.open, true);
-    assert.equal(transcript.open, true);
-    assert.ok(transcript.querySelector('p').textContent.length > 300);
-    assert.equal(dialog.querySelector('video'), null);
-    dialog.querySelector('.testimonial-dialog-close').emit('click');
-    assert.equal(dialog.open, false);
-    assert.equal(doc.activeElement, opener);
-    assert.equal(dialog.querySelector('#testimonial-player').children.length, 0);
+    assert.equal(card.querySelector('button'), null);
+    assert.equal(card.querySelector('.testimonial-media-label'), null);
+    assert.equal(card.querySelector('video'), null);
   }
+  assert.equal(doc.querySelector('#testimonial-dialog'), null);
+  assert.ok(!read('dist/index.html').includes('id="testimonial-dialog"'));
   track.emit('keydown', { key: 'End' });
   doc.resize[0]();
   assert.equal(status.textContent, '3–5 de 5');
@@ -132,21 +123,16 @@ test('all five photos lead their cards, with fictional badges, names, carousel a
   assert.equal(quiet.track.lastScroll.behavior, 'auto');
 });
 
-test('public pages hide fictional examples; authorized videos load only on request and unload on close', () => {
+test('public pages hide fictional examples; authorized entries show a photo and text without video playback', () => {
   const empty = mount('https://visitae.example/');
   assert.equal(empty.section.hidden, true);
   assert.equal(empty.track.children.length, 0);
-  const ready = mount('https://visitae.example/', { ambientes: { authorized: true, client: 'Cliente autorizado', title: 'Título real', summary: 'Resumo real', transcript: 'Transcrição fornecida', videoSrc: '/relato.mp4', poster: '/capa.webp', captionsSrc: '/legendas.vtt' } });
+  const ready = mount('https://visitae.example/', { ambientes: { authorized: true, client: 'Cliente autorizado', business: 'Negócio autorizado', title: 'Título real', summary: 'Resumo real', transcript: 'Transcrição fornecida', videoSrc: '/relato.mp4', poster: '/capa.webp', captionsSrc: '/legendas.vtt' } });
   assert.equal(ready.track.children.length, 1);
   assert.equal(ready.preview.hidden, true);
-  assert.equal(ready.dialog.querySelector('video'), null);
-  ready.track.children[0].querySelector('.testimonial-cover-play').emit('click');
-  const video = ready.dialog.querySelector('video');
-  assert.equal(video.src, 'https://visitae.example/relato.mp4');
-  assert.equal(video.played, true);
-  ready.dialog.emit('click', { clientX: -10, clientY: -10 });
-  assert.equal(ready.dialog.open, false);
-  assert.equal(video.paused, true);
-  assert.equal(video.unloaded, true);
-  assert.equal(ready.dialog.querySelector('video'), null);
+  const card = ready.track.children[0];
+  assert.equal(card.querySelector('.testimonial-poster').src, 'https://visitae.example/capa.webp');
+  assert.equal(card.querySelector('.testimonial-identity').children[1].textContent, 'Negócio autorizado');
+  assert.equal(ready.doc.querySelector('video'), null);
+  assert.equal(card.querySelector('button'), null);
 });

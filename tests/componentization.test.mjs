@@ -13,13 +13,15 @@ const hash = value => createHash('sha256').update(value).digest('hex');
 const baseline = JSON.parse(read('tests/fixtures/original-files.json'));
 
 test('assembled page preserves the original outside the restored testimonial section and requested location title', () => {
-  const withoutTestimonials = html => html.replace(/<section class="testimonials-section[\s\S]*?<\/section>/, '<!-- testimonial section -->');
+  const withoutTestimonials = html => html
+    .replace(/<section class="testimonials-section[\s\S]*?<\/section>/, '<!-- testimonial section -->')
+    .replace(/^[ \t]*<dialog class="testimonial-dialog"[\s\S]*?<\/dialog>\n?/m, '');
   const expected = read('tests/fixtures/original-index.html')
     .replace('<fieldset class="location-group">', '<fieldset class="location-group"><legend>Localização do estabelecimento</legend>')
-    .replace('testimonials.js?v=visitae-relatos-visiveis', 'testimonials.js?v=visitae-capas-recuperadas')
-    .replace('testimonials.css?v=visitae-3', 'testimonials.css?v=visitae-capas-recuperadas');
+    .replace('testimonials.js?v=visitae-relatos-visiveis', 'testimonials.js?v=visitae-cards-compactos')
+    .replace('testimonials.css?v=visitae-3', 'testimonials.css?v=visitae-cards-compactos');
   assert.equal(withoutTestimonials(read('dist/index.html')), withoutTestimonials(expected));
-  assert.equal(Object.keys(pageComponents).length, 18);
+  assert.equal(Object.keys(pageComponents).length, 17);
 });
 
 test('unrelated styles, fonts, portraits, illustrations, municipal data and prepared UI modules are byte identical', () => {

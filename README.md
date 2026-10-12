@@ -1,5 +1,9 @@
 # Visitaê
 
+## Depoimentos — apresentação atual
+
+Os cards têm frases de impacto maiores e mais fortes, seguidas de nome e negócio em texto discreto. As fotos são mais baixas e os controles de player, o botão “Ler relato” e o diálogo foram retirados por enquanto. Os cinco relatos completos continuam preservados nos dados e no histórico; o carrossel, as fotos e a identificação dos exemplos fictícios permanecem.
+
 ## Depoimentos recuperados
 
 A apresentação com fotos grandes foi recuperada do commit `52bd8f69af833b8f5f93bd95d42a58cee87a8116` do projeto original: capas 4:5, nomes sobre a imagem, identificação “EXEMPLO FICTÍCIO” e aviso “Prévia ilustrativa”. Os mesmos cinco retratos, os textos completos atuais, o carrossel e o diálogo de leitura foram preservados. A recuperação modifica somente esta seção e seu exemplo no Design System.

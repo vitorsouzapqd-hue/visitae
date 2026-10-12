@@ -95,28 +95,13 @@
   const previous = section.querySelector('.testimonial-prev');
   const next = section.querySelector('.testimonial-next');
   const status = section.querySelector('.testimonials-status');
-  const dialog = document.querySelector('#testimonial-dialog');
-  const player = dialog.querySelector('#testimonial-player');
-  const videoError = dialog.querySelector('#testimonial-video-error');
-  const captionsError = dialog.querySelector('#testimonial-captions-error');
-  const transcript = dialog.querySelector('#testimonial-transcript');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let opener;
   let scrollTimer;
   const element = (tag, className, text) => {
     const node = document.createElement(tag);
     if (className) node.className = className;
     if (text) node.textContent = text;
     return node;
-  };
-  const icon = name => {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('class', 'icon');
-    svg.setAttribute('aria-hidden', 'true');
-    const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-    use.setAttribute('href', `#${name}`);
-    svg.append(use);
-    return svg;
   };
 
   items.forEach((item, index) => {
@@ -138,29 +123,13 @@
       image.setAttribute('aria-label', `Personagem fictício: ${item.client}. Não é cliente real.`);
     }
     const meta = element('div', 'testimonial-cover-meta');
-    meta.append(element('span', 'testimonial-video-label', item.ready ? 'DEPOIMENTO EM VÍDEO' : 'EXEMPLO FICTÍCIO'));
-    const identity = element('div', 'testimonial-video-identity');
-    identity.append(element('strong', '', item.client), element('span', '', item.role || ''));
-    const play = element('button', 'testimonial-cover-play');
-    play.type = 'button';
-    play.setAttribute('aria-label', item.ready ? `Assistir ao depoimento de ${item.client}` : `Ler relato de ${item.client}`);
-    play.setAttribute('aria-haspopup', 'dialog');
-    play.append(icon('play'));
-    play.addEventListener('click', () => openItem(item, play));
-    const label = element('div', 'testimonial-media-label');
-    label.append(element('span', '', item.ready ? 'Clique para assistir' : 'Prévia do player · vídeo a inserir'), play);
-    cover.append(image, meta, identity, label);
+    meta.append(element('span', 'testimonial-video-label', item.ready ? 'DEPOIMENTO' : 'EXEMPLO FICTÍCIO'));
+    cover.append(image, meta);
     const body = element('div', 'testimonial-card-body');
     body.append(element('p', 'eyebrow', item.tag), element('h3', '', `“${item.title}”`), element('p', 'testimonial-summary', item.summary));
-    const details = element('div', 'testimonial-case-details');
-    details.append(element('strong', '', item.business || item.client), element('span', '', item.service || 'Serviço 360'));
-    const button = element('button', 'testimonial-open', item.ready ? 'Assistir ao depoimento' : 'Ler relato');
-    button.type = 'button';
-    button.setAttribute('aria-haspopup', 'dialog');
-    button.setAttribute('aria-label', item.ready ? `Abrir vídeo de ${item.client}` : `Ler relato de ${item.client}`);
-    button.append(icon(item.ready ? 'play' : 'arrow-up'));
-    button.addEventListener('click', () => openItem(item, button));
-    body.append(details, button);
+    const identity = element('div', 'testimonial-identity');
+    identity.append(element('strong', '', item.client), element('span', '', item.business || ''));
+    body.append(identity);
     card.append(cover, body);
     track.append(card);
     const dot = element('button', 'testimonial-dot');
@@ -208,67 +177,5 @@
   });
   new ResizeObserver(update).observe(track);
 
-  function openItem(item, button) {
-    opener = button;
-    dialog.querySelector('#testimonial-dialog-label').textContent = item.ready ? 'DEPOIMENTO' : 'RELATO';
-    dialog.querySelector('#testimonial-dialog-title').textContent = item.title;
-    dialog.querySelector('#testimonial-dialog-intro').textContent = item.summary;
-    const client = dialog.querySelector('#testimonial-client');
-    client.hidden = false;
-    client.textContent = [item.client, item.role, item.service].filter(Boolean).join(' · ');
-    transcript.hidden = false;
-    transcript.open = !item.ready;
-    transcript.querySelector('summary').textContent = item.ready ? 'Ler transcrição' : 'Relato completo';
-    transcript.querySelector('p').textContent = item.transcript;
-    player.replaceChildren();
-    player.hidden = false;
-    videoError.hidden = true;
-    captionsError.hidden = true;
-    if (!item.ready) {
-      const portrait = element('div', 'testimonial-dialog-photo');
-      portrait.style.backgroundPosition = `${item.portraitIndex * 25}% center`;
-      portrait.setAttribute('role', 'img');
-      portrait.setAttribute('aria-label', item.client);
-      player.append(portrait);
-      document.body.classList.add('testimonial-opened');
-      dialog.showModal();
-      dialog.scrollTop = 0;
-      return;
-    }
-    const video = document.createElement('video');
-    video.controls = true;
-    video.playsInline = true;
-    video.preload = 'none';
-    video.src = item.videoSrc;
-    video.poster = item.poster;
-    video.setAttribute('aria-label', `Depoimento de ${item.client}`);
-    const captions = document.createElement('track');
-    captions.kind = 'captions';
-    captions.src = item.captionsSrc;
-    captions.srclang = 'pt-BR';
-    captions.label = 'Português';
-    captions.default = true;
-    captions.addEventListener('error', () => { captionsError.hidden = false; transcript.open = true; });
-    video.append(captions);
-    video.addEventListener('error', () => { videoError.hidden = false; });
-    player.append(video);
-    document.body.classList.add('testimonial-opened');
-    dialog.showModal();
-    dialog.scrollTop = 0;
-    video.play().catch(() => {});
-  }
-  dialog.querySelector('.testimonial-dialog-close').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('click', event => {
-    if (event.target !== dialog) return;
-    const box = dialog.getBoundingClientRect();
-    if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close();
-  });
-  dialog.addEventListener('close', () => {
-    const video = player.querySelector('video');
-    if (video) { video.pause(); video.removeAttribute('src'); video.load(); }
-    player.replaceChildren();
-    document.body.classList.remove('testimonial-opened');
-    if (opener) opener.focus({ preventScroll: true });
-  });
   update();
 })();

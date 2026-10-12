@@ -15,11 +15,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@400;450;500;550;600;650;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=visitae-tour-tabs">
-  <link rel="stylesheet" href="testimonials.css?v=visitae-capas-recuperadas">
+  <link rel="stylesheet" href="testimonials.css?v=visitae-cards-compactos">
   <script src="config.js?v=visitae-relatos-visiveis" defer></script>
   <script src="locations.js?v=visitae-interface" defer></script>
   <script src="app.js?v=visitae-header-cta" defer></script>
-  <script src="testimonials.js?v=visitae-capas-recuperadas" defer></script>
+  <script src="testimonials.js?v=visitae-cards-compactos" defer></script>
 </head>
 <body>
   <svg class="svg-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -109,7 +109,7 @@
           <div><p class="eyebrow">05 / DEPOIMENTOS</p><h2 id="testimonials-title">Quem contratou<br><em>conta como foi.</em></h2></div>
           <p>Cada relato mostra uma experiência com o 360: o que o contratante queria resolver e como passou a usar o tour.</p>
         </div>
-        <div class="testimonials-preview" id="testimonials-preview" hidden><span class="status-dot" aria-hidden="true"></span><p><strong>Prévia ilustrativa.</strong> As pessoas e falas abaixo são fictícias. As capas foram geradas por IA para demonstrar o formato; os vídeos reais dos clientes ainda serão inseridos.</p></div>
+        <div class="testimonials-preview" id="testimonials-preview" hidden><span class="status-dot" aria-hidden="true"></span><p><strong>Prévia ilustrativa.</strong> As pessoas e falas abaixo são fictícias. As capas foram geradas por IA para demonstrar o formato.</p></div>
         <div class="testimonials-carousel" role="region" aria-roledescription="carrossel" aria-label="Relatos do protótipo">
           <div class="testimonials-track" id="testimonials-track" role="group" tabindex="0" aria-label="Relatos. Use as setas do teclado para navegar."></div>
           <div class="testimonials-navigation">
@@ -161,19 +161,6 @@
     <div class="page-demo-header"><div><h2 id="page-demo-title">Modelo de página — Vila Terroir</h2><p id="page-demo-note">Demonstração conceitual de página para hospedagem.</p></div><button class="button button-small button-dark" id="page-demo-close" type="button" autofocus>Fechar</button></div>
     <div class="page-demo-frame" id="page-demo-frame"></div>
     <div class="page-demo-footer"><a class="text-link" id="page-demo-external" href="https://vila-terroir-demo-vitor.vitorvelame.chatgpt.site" target="_blank" rel="noopener noreferrer">Abrir demonstração em nova aba</a></div>
-  </dialog>
-  <dialog class="testimonial-dialog" id="testimonial-dialog" aria-labelledby="testimonial-dialog-title">
-    <button class="testimonial-dialog-close" type="button" aria-label="Fechar relato">Fechar <span aria-hidden="true">×</span></button>
-    <div class="testimonial-dialog-content">
-      <p class="eyebrow" id="testimonial-dialog-label"></p>
-      <div class="testimonial-player" id="testimonial-player" hidden></div>
-      <h2 id="testimonial-dialog-title"></h2>
-      <p class="testimonial-dialog-intro" id="testimonial-dialog-intro"></p>
-      <p class="testimonial-video-error" id="testimonial-video-error" role="status" hidden>Não foi possível carregar este vídeo. Tente novamente mais tarde; a transcrição continua disponível abaixo.</p>
-      <p class="testimonial-video-error" id="testimonial-captions-error" role="status" hidden>As legendas não carregaram. Você pode acompanhar o relato pela transcrição abaixo.</p>
-      <p class="testimonial-client" id="testimonial-client" hidden></p>
-      <details class="testimonial-transcript" id="testimonial-transcript" hidden><summary>Ler transcrição</summary><p></p></details>
-    </div>
   </dialog>
 </body>
 </html>

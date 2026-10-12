@@ -7,5 +7,6 @@
   "preservationCommit": "91533ba",
   "preservedNarrativesSha256": "f501a2f6bbf15a7153f665b19625a78acd2b57f1c71793c3d667b81bac3500e7",
   "carouselAndDialogSha256": "153c4867e9e53f572db2f8bfa710f534de391f4af32376d10fefdc832b6e60fa",
-  "mediaEligibilitySha256": "a393ea5e835a52c8e478f950e101bad5d167a181051f8b2eef7a455d7e5c348f"
+  "mediaEligibilitySha256": "a393ea5e835a52c8e478f950e101bad5d167a181051f8b2eef7a455d7e5c348f",
+  "carouselSha256": "d50a7f06f7f466bda99e14ff3acdad54f8da230431e47a2e190f3c042e089fe8"
 }

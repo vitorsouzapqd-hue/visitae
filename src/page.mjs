@@ -14,7 +14,6 @@ import { QuoteForm } from "./sections/QuoteForm.mjs";
 import { Footer } from "./layout/Footer.mjs";
 import { CreditsDialog } from "./components/CreditsDialog.mjs";
 import { OwnPageDialog } from "./components/OwnPageDialog.mjs";
-import { TestimonialDialog } from "./components/TestimonialDialog.mjs";
 import { WhatsAppIcon } from "./components/WhatsAppIcon.mjs";
 
 export const pageComponents = {
@@ -34,6 +33,5 @@ export const pageComponents = {
   Footer,
   CreditsDialog,
   OwnPageDialog,
-  TestimonialDialog,
   WhatsAppSymbol: () => WhatsAppIcon({ attributes: ' id="whatsapp" viewBox="0 0 24 24"', symbol: true }),
 };

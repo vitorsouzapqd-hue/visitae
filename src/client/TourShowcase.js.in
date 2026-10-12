@@ -1,0 +1,156 @@
+const demos = {{tours}};
+
+let currentDemo = 'hotel';
+let iframe = null;
+let loadingTimer = null;
+let expanded = false;
+let previousFocus = null;
+let inertNodes = [];
+const tabs = $$('[data-demo]');
+const viewerWrap = $('#viewer-wrap');
+const viewer = $('#viewer');
+const cover = $('#viewer-cover');
+const loading = $('#viewer-loading');
+const resetButton = $('#viewer-reset');
+
+function resetTour() {
+  clearTimeout(loadingTimer);
+  if (iframe) iframe.remove();
+  iframe = null;
+  viewer.setAttribute('aria-busy', 'false');
+  loading.hidden = true;
+  cover.hidden = false;
+  resetButton.disabled = true;
+}
+
+function loadTour() {
+  if (iframe) return;
+  cover.hidden = true;
+  loading.hidden = false;
+  loading.textContent = 'Preparando sua visita…';
+  viewer.setAttribute('aria-busy', 'true');
+  resetButton.disabled = false;
+  const frame = document.createElement('iframe');
+  iframe = frame;
+  frame.src = demos[currentDemo].src;
+  frame.title = demos[currentDemo].title;
+  frame.allow = 'fullscreen; gyroscope; accelerometer';
+  frame.allowFullscreen = true;
+  frame.referrerPolicy = 'strict-origin-when-cross-origin';
+  frame.addEventListener('load', () => {
+    if (iframe !== frame) return;
+    clearTimeout(loadingTimer);
+    viewer.setAttribute('aria-busy', 'false');
+    loading.hidden = true;
+  }, { once: true });
+  frame.addEventListener('error', () => {
+    if (iframe !== frame) return;
+    resetTour();
+    loading.textContent = 'Não foi possível carregar o tour. Tente novamente ou use “Abrir tour em nova aba”.';
+    loading.hidden = false;
+  }, { once: true });
+  viewer.append(frame);
+  loadingTimer = setTimeout(() => {
+    if (iframe !== frame || loading.hidden) return;
+    viewer.setAttribute('aria-busy', 'false');
+    loading.textContent = 'O tour está demorando para carregar. Você pode abrir em nova aba ou voltar à prévia.';
+  }, 12000);
+}
+
+function selectDemo(key, start = false) {
+  if (!demos[key]) return;
+  if (key !== currentDemo) {
+    resetTour();
+    currentDemo = key;
+    const demo = demos[key];
+    $('#viewer-label').textContent = demo.label;
+    $('#viewer-start strong').textContent = demo.startLabel;
+    $('#demo-kind').textContent = demo.kind;
+    $('#demo-name').textContent = demo.name;
+    $('#demo-description').textContent = demo.description;
+    $('#demo-question').textContent = demo.question;
+    $('#demo-attribution').textContent = demo.attribution;
+    $('#demo-external').href = demo.external;
+    $('#viewer-image').src = demo.cover;
+    $('#viewer-image').alt = `Interior: ${demo.label}`;
+    $('#demo-panel').setAttribute('aria-labelledby', `tab-${key}`);
+  }
+  tabs.forEach(tab => {
+    const active = tab.dataset.demo === key;
+    tab.setAttribute('aria-selected', String(active));
+    tab.tabIndex = active ? 0 : -1;
+  });
+  if (start) loadTour();
+}
+
+tabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => selectDemo(tab.dataset.demo, Boolean(iframe)));
+  tab.addEventListener('keydown', event => {
+    let next = index;
+    if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+    else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+    else if (event.key === 'Home') next = 0;
+    else if (event.key === 'End') next = tabs.length - 1;
+    else return;
+    event.preventDefault();
+    tabs[next].focus();
+    selectDemo(tabs[next].dataset.demo, Boolean(iframe));
+  });
+});
+
+$('#viewer-start').addEventListener('click', loadTour);
+resetButton.addEventListener('click', () => {
+  resetTour();
+  $('#viewer-start').focus({ preventScroll: true });
+});
+$$('[data-demo-start]').forEach(button => button.addEventListener('click', event => {
+  event.preventDefault();
+  selectDemo(button.dataset.demoStart, true);
+  navigateTo($('#experimente'));
+}));
+
+function closeExpanded() {
+  if (!expanded) return;
+  expanded = false;
+  viewerWrap.classList.remove('is-expanded');
+  document.body.classList.remove('tour-open');
+  $('#viewer-close').hidden = true;
+  viewerWrap.removeAttribute('role');
+  viewerWrap.removeAttribute('aria-modal');
+  viewerWrap.removeAttribute('aria-label');
+  inertNodes.forEach(({ node, wasInert }) => { node.inert = wasInert; });
+  inertNodes = [];
+  if (previousFocus?.isConnected) previousFocus.focus({ preventScroll: true });
+  updateMobileContact();
+}
+$('.viewer-expand').addEventListener('click', () => {
+  if (expanded) return;
+  previousFocus = document.activeElement;
+  expanded = true;
+  loadTour();
+  viewerWrap.classList.add('is-expanded');
+  document.body.classList.add('tour-open');
+  viewerWrap.setAttribute('role', 'dialog');
+  viewerWrap.setAttribute('aria-modal', 'true');
+  viewerWrap.setAttribute('aria-label', 'Tour ampliado');
+  inertNodes = [$('.site-header'), $('.site-footer'), $('#mobile-contact'), ...$$('main > section:not(#experimente)'), $('.channel-strip'), $('.demo-heading'), $('.demo-tabs'), $('.demo-context'), $('.demo-attribution'), $('.demo-bottom')].filter(Boolean).map(node => ({ node, wasInert: node.inert }));
+  inertNodes.forEach(({ node }) => { node.inert = true; });
+  $('#viewer-close').hidden = false;
+  $('#viewer-close').focus();
+  updateMobileContact();
+});
+$('#viewer-close').addEventListener('click', closeExpanded);
+viewerWrap.addEventListener('keydown', event => {
+  if (!expanded || event.key !== 'Tab') return;
+  const controls = $$('a[href], button:not(:disabled), iframe', viewerWrap).filter(node => node.getClientRects().length);
+  const first = controls[0];
+  const last = controls[controls.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last?.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first?.focus();
+  }
+});
+document.addEventListener('keydown', event => { if (event.key === 'Escape') closeExpanded(); });

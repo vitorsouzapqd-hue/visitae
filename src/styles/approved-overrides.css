@@ -1,0 +1,38 @@
+
+/* Approved copy, with consistent reading sizes and proportionate spacing. */
+.section-heading > div:first-child, .page-copy, .contact-copy { min-width:0; }
+/* Practical section headings stay direct; expressive italics lead the invitation. */
+#solutions-title em, #process-title em, #faq-title em { font-family:inherit; font-size:inherit; font-style:normal; font-weight:inherit; }
+.hero-description + .hero-description { margin-top:13px; }
+.channel-note { padding-bottom:18px; font-size:14px; color:var(--muted); }
+.section-intro { width:330px; flex-shrink:0; color:var(--muted); font-size:16px; line-height:1.6; }
+.section-intro p + p { margin-top:14px; }
+.demo-bottom .button { flex-shrink:0; }
+.applications-intro { max-width:70ch; color:var(--muted); margin:0 0 48px; font-size:17px; line-height:1.6; }
+.applications-intro p + p { margin-top:14px; }
+.applications-intro p:last-child { color:var(--ink); margin-top:22px; }
+.application > .application-category { margin-top:36px; font-size:16px; font-weight:650; color:var(--ink); }
+.application h3.application-question { font:400 30px/1.2 var(--serif); margin-top:16px; letter-spacing:-.02em; }
+.application > p + p:not(.application-category) { margin-top:14px; }
+.page-features { padding-left:22px; margin:18px 0; color:#555d50; font-size:16px; line-height:1.6; }
+.page-features li + li { margin-top:10px; }
+.solution .solution-additional { font-size:14px; line-height:1.6; margin-top:0; }
+.solution .solution-additional + .solution-additional { margin-top:14px; }
+.solution > p:last-of-type { margin-bottom:28px; }
+.solution > .button-outline { background:var(--ink); border-color:var(--ink); color:var(--paper); }
+.solution > .button-outline:hover { background:#394333; border-color:#394333; }
+.solutions-note p:first-child, .solutions-note strong { color:var(--ink); }
+.solutions-note strong { font-size:inherit; }
+.solutions-note > p + p { margin-top:10px; }
+.solutions-common { max-width:90ch; margin-bottom:24px; color:var(--muted); font-size:14px; line-height:1.6; }
+.solutions-complement { font-size:16px; line-height:1.6; max-width:78ch; margin-top:24px; color:var(--muted); }
+.process-list p + p, .faq-list details > div p + p { margin-top:14px; }
+.process-contact { margin-top:36px; }
+.faq-list details[open] { background:#eaece34d; }
+.faq-list summary:hover { color:#4e631a; }
+.contact-copy > p + p:not(.eyebrow) { margin-top:14px; }
+.contact-form input:user-invalid, .contact-form select:user-invalid, .contact-form [aria-invalid="true"] { border-color:#a13825; }
+.contact-form input:user-invalid:focus, .contact-form select:user-invalid:focus, .contact-form [aria-invalid="true"]:focus { outline-color:#a13825; }
+.city-options [role="option"] { font-size:16px; min-height:46px; }
+.contact-submit { min-height:60px; padding-inline:18px; gap:12px; }
+.footer-bottom > span:last-child { max-width:48ch; }

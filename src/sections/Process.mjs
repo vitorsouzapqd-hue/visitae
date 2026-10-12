@@ -1,0 +1,5 @@
+import { Button } from "../components/Button.mjs";
+
+export function Process() {
+  return `<section class="process-section section container" id="processo" aria-labelledby="process-title"><div class="section-heading"><div><p class="eyebrow">07 / COMO FUNCIONA</p><h2 id="process-title">Da primeira conversa<br>ao link <em>funcionando.</em></h2></div></div><ol class="process-list"><li><span>01</span><div><h3>CONHECEMOS SEU ESPAÇO</h3><p>Você nos conta o que deseja apresentar. Avaliamos os ambientes e alinhamos o escopo e o orçamento.</p></div></li><li><span>02</span><div><h3>REGISTRAMOS E MONTAMOS</h3><p>Realizamos a captação presencial, tratamos as imagens e preparamos a experiência virtual — e a página própria, quando contratada.</p></div></li><li><span>03</span><div><h3>VOCÊ REVISA E COMPARTILHA</h3><p>Você confere o material, recebe os links e as orientações de uso. Os ajustes seguem as condições combinadas.</p></div></li></ol>${Button({ tag: "a", attributes: " class=\"button button-dark process-contact\" href=\"#contato\" ", content: `Quero apresentar meu espaço <svg class="icon" aria-hidden="true"><use href="#arrow-up"/></svg>` })}</section>`;
+}

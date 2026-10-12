@@ -1,0 +1,22 @@
+{
+  "app.js": "e54a5e6a67a57387536afe1197c19e13c5ad168307117690fbbce3b20867a2c3",
+  "config.js": "b14d58f1624f332b0d98e1e85528482589f0d254eaf7629ad71f0de73da1586d",
+  "locations.js": "7ce94f1ccc69ae08c7cc48d39843bdb9f82f16687e6685deb9cb23f4b262d877",
+  "styles.css": "b1da7405ed736973ea1de9615706e4f3e97286a2bc4ccdcf51bd97a88c8509bb",
+  "testimonials.css": "1b0d3d4a635cc647458cebc17583b11869a872ed80deb4b49a34c800487cabd5",
+  "testimonials.js": "e23b6c6a29a04f09dc36e730670b015289c0c377576bd8667b3e11412eec3142",
+  "assets/favicon.svg": "7b0f94f3b6b717abf19cb7ff0b2a8a541dce58d28157a446798ff170b721036a",
+  "assets/municipalities.json": "214beb133bb3c20d51ac33ec2ece07e431b207a2e2dd82fe68e68bc86274b1cb",
+  "assets/palace-hall.webp": "baf27d9455c4e151400af5ec9b62bf3761606a6a33ba110ce2abf1f0a02cbb34",
+  "assets/sumare.webp": "cb00230ab291c1067bea2c266af0e16fcb20f4f042bab1086f3089cd35a38dbc",
+  "assets/testimonial-portraits-illustrative.png": "135d2ee8b62f9687e998b9e08fb47620b8e2707dad2699881ec50d7f89e029af",
+  "assets/tour-cover.webp": "215167079c1bc66d0aab235410b7b0d367b45c2344efeb50dfb3f7bbf66b92c3",
+  "assets/vila-exterior.webp": "d539b8b2ca7d4a50ec015cd800350a6437298d87f132df292f9f4cbbe03cce91",
+  "assets/vila-preview.webp": "1861fe66a6944262fdee1d333f19722b6146d9c00974541e0870ba3de4459fc2",
+  "ui/brand-icons.mjs": "1b5f8ce4adb1ca75f73651feb43b155e96766dff5b7f793d64799c1b7bf217a4",
+  "ui/carousel.mjs": "f81b1e1fff2ce1ceb1ce6f48856a59e2e2a81343d26cf497321436f32c7a191c",
+  "ui/dialog.mjs": "ded42132e2bbceacb590c19a3a1b688629199408538835136531c914f3e0666b",
+  "ui/elements.mjs": "5a0bf5b26f2551ffb225cdd15ed194ab2687f60ddc8b58f943ea9a61d6bda40b",
+  "ui/index.mjs": "68cc86904168a74a95020e2f5f1d393e58a0ed64dbde433fa90e5735f9cdf295",
+  "ui/navigation.mjs": "936ca6bc35fd4e3abb3ee9a74516f242b491829fcaba8bcdd4f7679d8bcbfdc9"
+}

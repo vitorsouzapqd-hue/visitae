@@ -1,0 +1,17 @@
+
+/* The decision, then the formats. */
+.understanding-section .section-heading > div { max-width: 760px; }
+.understanding-section .section-heading h2 { font-size: clamp(36px, 3.7vw, 53px); }
+.understanding-section .section-heading > p { width: 285px; }
+.applications { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.application { position: relative; display: flex; flex-direction: column; align-items: flex-start; padding: 30px 30px 0; }
+.application:first-child { padding-left: 0; }
+.application:last-child { padding-right: 0; }
+.application + .application { border-left: 1px solid var(--line); }
+.application-number { color:var(--muted); font-size:14px; }
+.application-icon { position: absolute; right: 30px; top: 24px; font: 400 29px/1 var(--display); }
+.application:last-child .application-icon { right: 0; }
+.application h3 { font-size: 22px; line-height: 1.2; margin-top: 45px; letter-spacing: -.035em; }
+.application-question { font: 400 26px/1.15 var(--serif); margin-top: 22px; }
+.application > p:not(.application-question) { margin-top:20px; color:var(--muted); font-size:16px; line-height:1.6; max-width:56ch; }
+.application .text-link { margin-top:auto; padding-top:24px; font-size:15px; }

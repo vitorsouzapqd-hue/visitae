@@ -1,0 +1,5 @@
+
+/* Navigation */
+.site-header { position: sticky; top: 0; z-index: 80; background: rgba(246,245,239,.96); border-bottom: 1px solid transparent; transition: border-color .2s, box-shadow .2s; }
+.site-header.scrolled { border-color: var(--line); box-shadow: 0 4px 22px #20261f05; }
+.header-inner { height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }

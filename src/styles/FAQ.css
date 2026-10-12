@@ -1,0 +1,12 @@
+
+/* Practical objections and the single next step. */
+.faq-section { display:grid; grid-template-columns:.8fr 1.3fr; gap:80px; align-items:start; }
+.faq-intro > p:not(.eyebrow) { margin-top:24px; color:var(--muted); font-size:16px; line-height:1.6; }
+.faq-intro .text-link { margin-top: 14px; }
+.faq-list { border-top: 1px solid var(--line); }
+.faq-list details { border-bottom: 1px solid var(--line); }
+.faq-list summary { list-style:none; min-height:82px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:22px 8px; font-size:17px; line-height:1.5; font-weight:550; }
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list summary > span { display:grid; place-items:center; font:400 25px/1 var(--body); width:32px; height:32px; border-radius:50%; text-align:center; flex-shrink:0; transition:transform .18s; }
+.faq-list details[open] summary > span { transform:rotate(45deg); background:var(--soft); }
+.faq-list details > div { padding:0 54px 26px 8px; font-size:16px; line-height:1.65; color:var(--muted); }

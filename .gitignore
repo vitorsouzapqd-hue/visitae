@@ -7,7 +7,8 @@ node_modules/
 .yarn/install-state.gz
 
 # Builds and test output
-# The original static source lives in dist/ and must remain versioned.
+# Keep the existing versioned dist/ delivery files required by static hosting.
+# Components live in src/; no additional build directory or cache is committed.
 build/
 out/
 .next/

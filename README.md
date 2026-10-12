@@ -1,8 +1,26 @@
 # Visitaê
 
+## Componentização — etapa 4
+
+A aplicação continua em HTML, CSS e JavaScript nativos, sem dependências novas. Edite `src/`; `npm run build` monta os arquivos estáticos em `dist/`, mantendo o contrato de hospedagem existente. `npm run dev` compila e serve em `http://127.0.0.1:5173`. Reexecute a compilação após editar os componentes; não há servidor de atualização automática.
+
+- `src/layout/`: Header e Footer.
+- `src/sections/`: Hero, ShareMarquee, TourShowcase, Applications, OwnPageShowcase, GoogleMapsShowcase, Testimonials, Solutions, Process, Founder, FAQ e QuoteForm.
+- `src/components/`: BrandLogo, Button, Modal, WhatsAppIcon, PackageCard, FAQItem e os três diálogos específicos. Os renderizadores recebem somente HTML/atributos confiáveis dos arquivos do projeto, nunca entrada de visitantes.
+- `src/data/`: tours com créditos, pacotes, perguntas frequentes e os cinco relatos fictícios internos.
+- `src/client/`: comportamentos originais separados por responsabilidade. Os arquivos `.js.in` recebem os dados na compilação; `src/build-order.mjs` preserva a ordem dos scripts e a cascata CSS. `src/styles/` concentra os estilos por componente, regras compartilhadas e responsividade; nenhum seletor ou valor visual foi reescrito.
+
+`src/index.html` define a ordem da página e `src/page.mjs` registra os componentes. A marca e o vetor do WhatsApp são compartilhados; este último usa o registro nativo preparado na etapa 3. Os controladores originais de tours, menu, modais e carrossel foram preservados para manter seus estados e o ciclo de vida da mídia.
+
+As duas mudanças solicitadas nesta etapa são o título “Localização do estabelecimento”, usando o CSS já existente, e os relatos fictícios restritos a `localhost`, `127.0.0.1` ou `[::1]`, com a flag explícita. Em endereço público, apenas relatos reais completos e autorizados podem aparecer. Fontes, imagens, textos comerciais, links e estilos permanecem iguais ao original.
+
+Verificação: `npm run check` compila e verifica a sintaxe; `npm test` compila e executa os testes. A referência recuperável em `tests/fixtures/` permite comparar o HTML completo, scripts, estilos e recursos da importação. Os testes também exercitam contato, tours, controles e elegibilidade dos relatos. Esta etapa não inclui navegador, auditoria visual ou envio de mensagens.
+
 ## Design System alinhado à implementação
 
 `design-system.html` carrega os mesmos arquivos CSS e o mesmo endereço de fontes da landing. A prévia incorporada abre o próprio `dist/index.html`; os componentes simplificados da documentação anterior foram substituídos por essa referência real. As 17 seções documentam os valores implementados e as decisões pendentes, sem alterar a aplicação.
+
+O arquivo aprovado foi preservado nesta refatoração. Seus trechos isolados e notas anteriores ao título de localização e à restrição de relatos continuam registrados; para essas duas decisões, consulte a etapa 4 acima. A prévia principal já exibe a aplicação atual compilada.
 
 As seções também contêm 11 exemplos visíveis extraídos do HTML original: tipografia, botões, badge, faixa e ícones, cards de aplicações e soluções, carrossel com cinco relatos, diálogo, formulário, FAQ e menu móvel. Os exemplos usam os mesmos estilos e fontes em documentos isolados. O carrossel executa os scripts originais; a busca municipal usa `locations.js`; o formulário documental bloqueia o envio. Para atualizar os trechos após mudanças no site, execute `python scripts/sync-design-system-examples.py`.
 
@@ -10,7 +28,7 @@ Para consultar pelo servidor local, execute nesta pasta `python -m http.server 5
 
 ## Infraestrutura de componentes
 
-Módulos ES nativos em `dist/ui/index.mjs`, sem dependências externas ou inicialização automática. A landing page não importa estes módulos nesta etapa; seus arquivos e comportamentos permanecem intactos. React, shadcn/ui, Radix, lucide-react, react-icons e Embla não foram adicionados: o projeto original não usa React e já possui controles nativos funcionais. Não há migração para Tailwind.
+Módulos ES nativos em `src/ui/index.mjs`, copiados pela compilação para `dist/ui/index.mjs`, sem dependências externas ou inicialização automática. O registro de marcas é compartilhado com a montagem da landing; os demais controladores continuam disponíveis sem substituir comportamentos específicos já funcionais. React, shadcn/ui, Radix, lucide-react, react-icons e Embla não foram adicionados: o projeto original não usa React e já possui controles nativos funcionais. Não há migração para Tailwind.
 
 - `Button`, `Input`, `Select`, `Label` e `Accordion` criam elementos nativos com texto seguro e classes existentes. Botões aceitam variantes `dark`, `lime`, `light`, `outline` e tamanho `small`. Campos e labels devem permanecer dentro de `.contact-form`, com `id`, `name` e associação por `htmlFor`. Conteúdo fornecido como nó DOM é responsabilidade do chamador.
 - `Dialog({ element, closeButton })` recebe um `<dialog>` conectado ao documento, com título associado por `aria-labelledby` e botão de fechamento acessível. Expõe `open(opener)`, `close()` e `destroy()`. Reutiliza a modalidade nativa e prepara bloqueio de rolagem, retorno de foco e fechamento pelo backdrop; conteúdo e descarregamento de mídia continuam a cargo do componente específico.
@@ -24,9 +42,9 @@ Carregue futuramente o ponto de entrada por `<script type="module">`, mantendo `
 
 Origem efetivamente importada: `C:/Users/Vítor Velame/.codex/visualizations/2026/10/10/01a127f9-fe60-7560-aa0b-41ee0d7f6358/vitor-360`, incluindo as alterações locais existentes em `dist/index.html` e `dist/styles.css`.
 
-Na pasta deste projeto, execute `python -m http.server 5173 --bind 127.0.0.1 --directory dist` e acesse `http://127.0.0.1:5173`. Encerre com Ctrl+C. Python já disponível no ambiente local; nenhuma dependência precisa ser instalada.
+Na pasta deste projeto, execute `npm run dev` e acesse `http://127.0.0.1:5173`. Encerre com Ctrl+C. Node.js e Python já estão disponíveis no ambiente local; nenhuma dependência precisa ser instalada.
 
-`dist/` contém os arquivos estáticos originais editados diretamente, sem compilação ou gerador. Seu conteúdo foi preservado byte a byte. Verificação de sintaxe: `node --check dist/app.js` (também aplicado aos demais scripts). Testes originais: `node tests/contact-flow.test.cjs`.
+Na importação, `dist/` continha os arquivos originais editados diretamente e foi preservado byte a byte. Após a etapa 4, os arquivos de entrega são montados a partir de `src/`; as imagens e a base municipal permanecem em `dist/assets/`. O HTML completo continua igual, exceto pelo título de localização e pela atualização do endereço de cache do script que restringe os relatos fictícios.
 
 Fontes e demonstrações externas continuam usando os endereços originais e precisam de conexão para carregar. O manifesto de hospedagem original foi preservado; esta importação não publica nem altera a hospedagem. As seções abaixo registram o histórico original, inclusive configurações anteriores.
 
@@ -148,4 +166,4 @@ O redesign completo está fora do comando 1. O endereço hospedado atual continu
 
 ## Hospedagem e arquivos
 
-Projeto Sites `appgprj_6acae6b57d8881918b473ffa6f327722`; manifesto `.openai/hosting.json`. Site estático em `dist/`, sem instalação ou etapa de compilação. Tours externos carregam sob demanda; fontes vêm do Google Fonts. Acesso atual restrito ao proprietário, preservado na atualização.
+Projeto Sites `appgprj_6acae6b57d8881918b473ffa6f327722`; manifesto `.openai/hosting.json`. Site estático em `dist/`, montado por `npm run build` sem instalação de bibliotecas. Tours externos carregam sob demanda; fontes vêm do Google Fonts. Esta etapa salva no Git e não altera a hospedagem nem suas permissões.

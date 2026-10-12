@@ -1,0 +1,27 @@
+.credits-dialog { width: min(680px, calc(100% - 32px)); max-height: calc(100dvh - 48px); padding: 44px; border: 1px solid var(--line); border-radius: 13px; background: var(--paper); color: var(--ink); overflow: auto; box-shadow: 0 30px 100px #0004; }
+.credits-dialog::backdrop { background: #20261fbf; backdrop-filter: blur(5px); }
+.credits-dialog h2 { font-size: 34px; margin-top: 19px; margin-bottom: 23px; padding-right: 15px; }
+.credits-dialog p:not(.eyebrow), .credits-dialog li { font-size:16px; line-height:1.65; }
+.credits-dialog p + p { margin-top: 18px; }
+.credits-dialog ul { padding-left: 18px; margin-block: 20px; }
+.credits-dialog li + li { margin-top: 12px; }
+.credits-dialog a { text-decoration: underline; text-underline-offset: 3px; }
+.dialog-close { position: absolute; top: 10px; right: 10px; display: grid; place-items: center; width: 44px; height: 44px; background: transparent; font-size: 28px; border-radius: 50%; }
+.dialog-close:hover { background: var(--soft); }
+
+body.page-demo-open { overflow:hidden; }
+.page-demo-dialog { width:min(1280px, calc(100% - 32px)); height:calc(100dvh - 32px); max-width:none; max-height:none; padding:0; margin:auto; border:1px solid var(--line); border-radius:12px; background:var(--paper); color:var(--ink); overflow:hidden; }
+.page-demo-dialog[open] { display:grid; grid-template-rows:auto minmax(0, 1fr) auto; }
+.page-demo-dialog::backdrop { background:#20261fbf; }
+.page-demo-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:20px 24px; border-bottom:1px solid var(--line); }
+.page-demo-header h2 { font-size:clamp(22px, 2.5vw, 28px); line-height:1.2; }
+.page-demo-header p { margin-top:6px; font-size:14px; line-height:1.5; color:var(--muted); }
+.page-demo-header .button { flex-shrink:0; min-height:44px; }
+.page-demo-frame { min-width:0; min-height:0; }
+.page-demo-frame iframe { display:block; width:100%; height:100%; border:0; background:var(--paper); }
+.page-demo-footer { padding:12px 24px; border-top:1px solid var(--line); font-size:14px; }
+@media (max-width:600px) {
+ .page-demo-dialog { width:calc(100% - 16px); height:calc(100dvh - 16px); }
+ .page-demo-header { gap:12px; padding:16px; }
+ .page-demo-footer { padding:12px 16px; }
+}

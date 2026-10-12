@@ -1,0 +1,5 @@
+.process-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 40px; }
+.process-list li { border-top: 1px solid var(--ink); padding-top: 20px; }
+.process-list li > span { display:grid; place-items:center; width:38px; height:38px; border-radius:50%; border:1px solid var(--line); font-size:14px; }
+.process-list h3 { font-size:22px; line-height:1.25; margin-top:24px; letter-spacing:-.025em; }
+.process-list p { margin-top:18px; font-size:16px; line-height:1.6; color:var(--muted); max-width:54ch; }

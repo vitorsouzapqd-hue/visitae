@@ -1,0 +1,19 @@
+.solutions-section { background: #eeeee7; border-block: 1px solid var(--line); }
+.solutions-section .section-heading h2 { font-size: clamp(36px, 3.7vw, 53px); }
+.solutions-section .section-heading > p { width: 320px; }
+.solutions-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; align-items:stretch; }
+.solution { display:flex; flex-direction:column; min-width:0; padding:30px; border:1px solid #cdd2c4; border-radius:12px; background:var(--paper); }
+.solution-featured { background:var(--paper); border-color:#cdd2c4; }
+.solution-top { display:flex; align-items:center; gap:14px; padding-bottom:24px; border-bottom:1px solid var(--line); }
+.solution-number { display:grid; place-items:center; width:34px; height:34px; border-radius:50%; background:var(--soft); font:500 14px/1 var(--display); flex-shrink:0; }
+.solution-label { font:650 16px/1.35 var(--display); letter-spacing:-.015em; }
+.solution h3 { font-size:28px; line-height:1.15; letter-spacing:-.035em; margin-top:28px; }
+.solution > p { margin-top:18px; font-size:16px; line-height:1.6; color:#555d4e; }
+.solution-featured > p { color:#555d4e; }
+.check-list { margin:24px 0; padding:0; list-style:none; }
+.check-list li { display:flex; align-items:flex-start; gap:11px; font-size:16px; line-height:1.55; padding-block:9px; }
+.check-list .icon { width: 17px; height: 17px; margin-top: 2px; }
+.solution > .button { width:100%; margin-top:auto; justify-content:space-between; font-size:15px; padding-inline:16px; text-align:left; }
+.solutions-note { display:block; border-top:1px solid #cdd2c4; margin-top:36px; padding-top:24px; }
+.solutions-note strong { flex: 0 0 245px; font-size: 12px; font-weight: 650; }
+.solutions-note p { max-width:90ch; font-size:14px; line-height:1.6; color:var(--muted); }

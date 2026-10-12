@@ -15,5 +15,6 @@ function check(directory) {
     }
   }
 }
-for (const directory of ['dist', 'tests', 'scripts', 'documentation']) check(resolve(root, directory));
+// .js.in fragments contain build-time data slots; their assembled output is checked in dist.
+for (const directory of ['dist', 'src', 'tests', 'scripts', 'documentation']) check(resolve(root, directory));
 console.log('Syntax OK: application, UI modules, documentation, scripts and tests.');

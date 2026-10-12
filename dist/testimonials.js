@@ -4,8 +4,10 @@
   const section = document.querySelector('#depoimentos');
   if (!section) return;
   const configured = window.SITE_TESTIMONIALS || {};
-  // Illustrative prototype stories are explicitly enabled by configuration.
-  const demoEnabled = window.SITE_CONFIG?.demoTestimonials === true;
+  // Internal demonstrations require both the flag and a loopback address.
+  // document.baseURI also supports the isolated local Design System samples.
+  const internalHost = ['localhost', '127.0.0.1', '[::1]'].includes(new URL(document.baseURI).hostname);
+  const demoEnabled = window.SITE_CONFIG?.demoTestimonials === true && internalHost;
   const topics = [
   {
     "id": "ambientes",

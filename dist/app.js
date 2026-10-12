@@ -4,45 +4,45 @@ const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const config = window.SITE_CONFIG || {};
 const demos = {
-  hotel: {
-    src: 'https://tours.clearpano.com/T2ZhHe0r',
-    external: 'https://tours.clearpano.com/T2ZhHe0r',
-    cover: 'assets/tour-cover.webp',
-    label: 'HOLM HOTEL · TOUR 360',
-    kind: 'TOUR PERSONALIZADO',
-    name: "Uma hospedagem. Outro jeito de conhecer.",
-    description: "Uma foto mostra o quarto por um ângulo. Agora experimente olhar ao redor.",
-    question: "\"Como é esse ambiente para além do enquadramento das fotos?\"",
-    attribution: 'Holm Hotel · Tour produzido pela Clear Pano.',
-    title: 'Holm Hotel em 360 · Clear Pano',
-    startLabel: "Começar a visita",
+  "hotel": {
+    "src": "https://tours.clearpano.com/T2ZhHe0r",
+    "external": "https://tours.clearpano.com/T2ZhHe0r",
+    "cover": "assets/tour-cover.webp",
+    "label": "HOLM HOTEL · TOUR 360",
+    "kind": "TOUR PERSONALIZADO",
+    "name": "Uma hospedagem. Outro jeito de conhecer.",
+    "description": "Uma foto mostra o quarto por um ângulo. Agora experimente olhar ao redor.",
+    "question": "\"Como é esse ambiente para além do enquadramento das fotos?\"",
+    "attribution": "Holm Hotel · Tour produzido pela Clear Pano.",
+    "title": "Holm Hotel em 360 · Clear Pano",
+    "startLabel": "Começar a visita"
   },
-  evento: {
-    src: 'https://www.google.com/maps/embed?pb=!4v1791682261391!6m8!1m7!1sCAoSLEFGMVFpcE1kM01xUHNaUGpuRFRMUDAxVzliVm15SU54YjhPcHlITVpTbGxv!2m2!1d-22.93141550741984!2d-43.55552526118038!3f321.75!4f-1.0699999999999932!5f0.4000000000000002',
-    external: 'https://maps.app.goo.gl/wMfgnJ47d7WYYSRbA',
-    cover: 'assets/palace-hall.webp',
-    label: 'PALACE HALL · GOOGLE MAPS',
-    kind: 'POR DENTRO NO GOOGLE MAPS',
-    name: "Um salão. Muito mais para mostrar.",
-    description: "Conheça o salão por dentro e observe como o ambiente está organizado.",
-    question: "\"Consigo entender o salão antes de conhecer pessoalmente?\"",
-    attribution: 'Palace Hall · Tour produzido pela Tour Brasil360.',
-    title: 'Tour no Google Maps: Palace Hall, Tour Brasil360',
-    startLabel: "Explorar o salão",
+  "evento": {
+    "src": "https://www.google.com/maps/embed?pb=!4v1791682261391!6m8!1m7!1sCAoSLEFGMVFpcE1kM01xUHNaUGpuRFRMUDAxVzliVm15SU54YjhPcHlITVpTbGxv!2m2!1d-22.93141550741984!2d-43.55552526118038!3f321.75!4f-1.0699999999999932!5f0.4000000000000002",
+    "external": "https://maps.app.goo.gl/wMfgnJ47d7WYYSRbA",
+    "cover": "assets/palace-hall.webp",
+    "label": "PALACE HALL · GOOGLE MAPS",
+    "kind": "POR DENTRO NO GOOGLE MAPS",
+    "name": "Um salão. Muito mais para mostrar.",
+    "description": "Conheça o salão por dentro e observe como o ambiente está organizado.",
+    "question": "\"Consigo entender o salão antes de conhecer pessoalmente?\"",
+    "attribution": "Palace Hall · Tour produzido pela Tour Brasil360.",
+    "title": "Tour no Google Maps: Palace Hall, Tour Brasil360",
+    "startLabel": "Explorar o salão"
   },
-  esportes: {
-    src: 'https://www.google.com/maps/embed?pb=!4v1791682224889!6m8!1m7!1sCAoSLEFGMVFpcE1kejZ4NDFDOFBRTGplRlFDd3J1MHNONVppUjhJTEt6TzVuTUF1!2m2!1d-23.54103852537176!2d-46.67898180447695!3f254.57!4f2.019999999999996!5f0.4000000000000002',
-    external: 'https://maps.app.goo.gl/Z2bWe51JyZyWNWKD6',
-    cover: 'assets/sumare.webp',
-    label: 'SUMARÉ ESPORTES · GOOGLE MAPS',
-    kind: 'ESTRUTURA PARA EXPLORAR',
-    name: "A estrutura que você procura, pronta para explorar.",
-    description: "Explore a estrutura e veja o espaço de diferentes perspectivas.",
-    question: "\"Como é o lugar onde pretendo treinar?\"",
-    attribution: 'Sumaré Esportes · Tour produzido pela Tour Brasil360.',
-    title: 'Tour no Google Maps: Sumaré Esportes, Tour Brasil360',
-    startLabel: "Explorar a estrutura",
-  },
+  "esportes": {
+    "src": "https://www.google.com/maps/embed?pb=!4v1791682224889!6m8!1m7!1sCAoSLEFGMVFpcE1kejZ4NDFDOFBRTGplRlFDd3J1MHNONVppUjhJTEt6TzVuTUF1!2m2!1d-23.54103852537176!2d-46.67898180447695!3f254.57!4f2.019999999999996!5f0.4000000000000002",
+    "external": "https://maps.app.goo.gl/Z2bWe51JyZyWNWKD6",
+    "cover": "assets/sumare.webp",
+    "label": "SUMARÉ ESPORTES · GOOGLE MAPS",
+    "kind": "ESTRUTURA PARA EXPLORAR",
+    "name": "A estrutura que você procura, pronta para explorar.",
+    "description": "Explore a estrutura e veja o espaço de diferentes perspectivas.",
+    "question": "\"Como é o lugar onde pretendo treinar?\"",
+    "attribution": "Sumaré Esportes · Tour produzido pela Tour Brasil360.",
+    "title": "Tour no Google Maps: Sumaré Esportes, Tour Brasil360",
+    "startLabel": "Explorar a estrutura"
+  }
 };
 
 let currentDemo = 'hotel';

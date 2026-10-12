@@ -1,0 +1,11 @@
+.maps-section { display:grid; grid-template-columns:1fr; gap:64px; align-items:start; }
+.maps-visual { min-width: 0; }
+.maps-photo { position:relative; overflow:hidden; border-radius:12px; background:#dce0d3; aspect-ratio:4 / 3; }
+.maps-photo > img { width: 100%; height: 100%; object-fit: cover; }
+.maps-photo .button { position:absolute; bottom:20px; left:20px; right:20px; gap:12px; justify-content:flex-start; font-size:14px; }
+.maps-photo .button .icon:last-child { margin-left: auto; }
+.maps-copy h2 { font-size:clamp(36px,3vw,44px); line-height:1.12; }
+.maps-copy > p:not(.eyebrow):not(.small-note) { max-width:59ch; color:var(--muted); font-size:16px; line-height:1.6; margin-top:22px; }
+.maps-copy > p + p:not(.small-note) { margin-top: 12px; }
+.maps-copy .text-link { margin-top: 15px; }
+.small-note { margin-top:18px; max-width:65ch; font-size:14px; line-height:1.55; color:var(--muted); }

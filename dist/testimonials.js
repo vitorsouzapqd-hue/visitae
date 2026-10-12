@@ -4,11 +4,7 @@
   const section = document.querySelector('#depoimentos');
   if (!section) return;
   const configured = window.SITE_TESTIMONIALS || {};
-  // Internal demonstrations require the flag and a local file or loopback address.
-  // document.baseURI also supports the isolated local Design System samples.
-  const localFile = location.protocol === 'file:' || (location.protocol === 'about:' && new URL(document.baseURI).protocol === 'file:');
-  const internalHost = localFile || ['localhost', '127.0.0.1', '[::1]'].includes(new URL(document.baseURI).hostname);
-  const demoEnabled = window.SITE_CONFIG?.demoTestimonials === true && internalHost;
+  // Illustrative cards are available in every environment and identified by the section notice.
   const topics = [
   {
     "id": "ambientes",
@@ -84,7 +80,7 @@
       ['client', 'title', 'summary', 'transcript'].every(key => hasText(data[key]));
     return complete
       ? { id: topic.id, tag: topic.tag, ...data, videoSrc, poster, captionsSrc, ready: true }
-      : demoEnabled ? { ...topic, client: topic.name, transcript: topic.story, ready: false, portraitIndex: index } : null;
+      : { ...topic, client: topic.name, transcript: topic.story, ready: false, portraitIndex: index };
   }).filter(Boolean);
   section.hidden = items.length === 0;
   if (!items.length) return;
@@ -122,9 +118,7 @@
       image.setAttribute('role', 'img');
       image.setAttribute('aria-label', `Personagem fictício: ${item.client}. Não é cliente real.`);
     }
-    const meta = element('div', 'testimonial-cover-meta');
-    meta.append(element('span', 'testimonial-video-label', item.ready ? 'DEPOIMENTO' : 'EXEMPLO FICTÍCIO'));
-    cover.append(image, meta);
+    cover.append(image);
     const body = element('div', 'testimonial-card-body');
     body.append(element('p', 'eyebrow', item.tag), element('h3', '', `“${item.title}”`), element('p', 'testimonial-summary', item.summary));
     const identity = element('div', 'testimonial-identity');

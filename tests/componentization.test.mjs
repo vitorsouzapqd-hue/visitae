@@ -18,8 +18,9 @@ test('assembled page preserves the original outside the restored testimonial sec
     .replace(/^[ \t]*<dialog class="testimonial-dialog"[\s\S]*?<\/dialog>\n?/m, '');
   const expected = read('tests/fixtures/original-index.html')
     .replace('<fieldset class="location-group">', '<fieldset class="location-group"><legend>Localização do estabelecimento</legend>')
-    .replace('testimonials.js?v=visitae-relatos-visiveis', 'testimonials.js?v=visitae-cards-compactos')
-    .replace('testimonials.css?v=visitae-3', 'testimonials.css?v=visitae-cards-compactos');
+    .replace('testimonials.js?v=visitae-relatos-visiveis', 'testimonials.js?v=visitae-relatos-publicos')
+    .replace('testimonials.css?v=visitae-3', 'testimonials.css?v=visitae-relatos-publicos')
+    .replace('config.js?v=visitae-relatos-visiveis', 'config.js?v=visitae-relatos-publicos');
   assert.equal(withoutTestimonials(read('dist/index.html')), withoutTestimonials(expected));
   assert.equal(Object.keys(pageComponents).length, 17);
 });
@@ -40,30 +41,32 @@ test('existing tour and contact behavior is preserved after extracting tour data
   assert.equal(hash(app.slice(0, start) + originalExpression + app.slice(end)), baseline['app.js']);
 });
 
-test('public demos are blocked even with the flag; authorized real media remains eligible', () => {
+test('illustrative cards are available in every environment; real media still requires authorization and complete data', () => {
   const source = read('dist/testimonials.js');
   // Execute the real configuration/eligibility path before the DOM rendering boundary.
   const prefix = source.slice(source.indexOf('  const configured'), source.indexOf('  section.hidden'));
   function eligible(url, flag = true, configured = {}, locationURL = url) {
-    const context = vm.createContext({ URL, document: { baseURI: url }, location: new URL(locationURL), window: { SITE_CONFIG: { demoTestimonials: flag }, SITE_TESTIMONIALS: configured } });
+    const context = vm.createContext({ URL, document: { baseURI: url }, location: new URL(locationURL), window: { SITE_CONFIG: flag === null ? undefined : { demoTestimonials: flag }, SITE_TESTIMONIALS: configured } });
     return vm.runInContext(`${prefix}\nitems`, context);
   }
-  for (const url of ['https://visitae.example/', 'https://localhost.example/', 'https://visitae.example/?demoTestimonials=true']) {
-    assert.equal(eligible(url).length, 0, url);
-  }
-  for (const url of ['http://localhost:5173/', 'http://127.0.0.1:5173/', 'http://[::1]:5173/', 'file:///C:/Site/index.html']) {
+  for (const url of ['https://visitae.example/', 'https://localhost.example/', 'https://visitae.example/?demoTestimonials=false', 'http://localhost:5173/', 'http://127.0.0.1:5173/', 'http://[::1]:5173/', 'file:///C:/Site/index.html']) {
     assert.deepEqual(Array.from(eligible(url), item => item.client), ['Marina', 'Rafael', 'André', 'Camila', 'Renata']);
-    assert.equal(eligible(url, false).length, 0);
+    assert.equal(eligible(url, false).length, 5);
+    assert.equal(eligible(url, null).length, 5);
   }
   assert.equal(eligible('file:///C:/Site/dist/index.html', true, {}, 'about:srcdoc').length, 5);
-  assert.equal(eligible('https://visitae.example/', true, {}, 'about:srcdoc').length, 0);
+  assert.equal(eligible('https://visitae.example/', true, {}, 'about:srcdoc').length, 5);
   const authorized = { ambientes: { authorized: true, client: 'Cliente autorizado', title: 'Título fornecido', summary: 'Resumo fornecido', transcript: 'Transcrição fornecida', videoSrc: '/relato.mp4', poster: '/capa.webp', captionsSrc: '/legendas.vtt' } };
   const real = eligible('https://visitae.example/', true, authorized);
-  assert.equal(real.length, 1);
+  assert.equal(real.length, 5);
   assert.equal(real[0].ready, true);
   assert.equal(real[0].client, authorized.ambientes.client);
-  assert.equal(eligible('https://visitae.example/', true, { ambientes: { ...authorized.ambientes, authorized: false } }).length, 0);
-  assert.equal(eligible('https://visitae.example/', true, { ambientes: { ...authorized.ambientes, captionsSrc: 'https://other.example/captions.vtt' } }).length, 0);
+  for (const patch of [{ authorized: false }, { captionsSrc: 'https://other.example/captions.vtt' }, { title: '' }, { videoSrc: 'javascript:alert(1)' }]) {
+    const fallback = eligible('https://visitae.example/', true, { ambientes: { ...authorized.ambientes, ...patch } });
+    assert.equal(fallback.length, 5);
+    assert.equal(fallback[0].ready, false);
+    assert.equal(fallback[0].client, 'Marina');
+  }
 });
 
 test('package CTA values match the form; tours and all local references remain available', () => {

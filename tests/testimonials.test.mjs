@@ -8,11 +8,10 @@ const read = path => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8'
 const hash = value => createHash('sha256').update(value).digest('hex');
 const recovered = JSON.parse(read('tests/fixtures/recovered-testimonials.json'));
 
-test('compact cards preserve narratives, media eligibility and the existing carousel', () => {
+test('compact cards preserve narratives and the existing carousel', () => {
   assert.equal(hash(read('src/data/testimonials.mjs')), recovered.preservedNarrativesSha256);
   const script = read('dist/testimonials.js');
   assert.equal(hash(script.slice(script.indexOf('  const cards ='), script.lastIndexOf('  update();')).trimEnd()), recovered.carouselSha256);
-  assert.equal(hash(script.slice(script.indexOf('  const safeMedia'), script.indexOf('  section.hidden'))), recovered.mediaEligibilitySha256);
 });
 
 // DOM boundary doubles exercise the real renderer and handlers without a browser.
@@ -104,7 +103,8 @@ test('five compact cards show the quote before name/business, without player or 
     assert.equal(identity.children[1].textContent, business);
     const body = card.children[1];
     assert.ok(body.children.indexOf(body.querySelector('h3')) < body.children.indexOf(identity));
-    assert.equal(card.querySelector('.testimonial-video-label').textContent, 'EXEMPLO FICTÍCIO');
+    assert.equal(card.querySelector('.testimonial-video-label'), null);
+    assert.equal(card.querySelector('.testimonial-cover-meta'), null);
     assert.equal(card.querySelector('.testimonial-portrait-sprite').style.backgroundPosition, `${index * 25}% center`);
     assert.equal(card.querySelector('button'), null);
     assert.equal(card.querySelector('.testimonial-media-label'), null);
@@ -123,16 +123,22 @@ test('five compact cards show the quote before name/business, without player or 
   assert.equal(quiet.track.lastScroll.behavior, 'auto');
 });
 
-test('public pages hide fictional examples; authorized entries show a photo and text without video playback', () => {
+test('public pages show illustrative cards with a notice; authorized entries replace their matching card', () => {
   const empty = mount('https://visitae.example/');
-  assert.equal(empty.section.hidden, true);
-  assert.equal(empty.track.children.length, 0);
+  assert.equal(empty.section.hidden, false);
+  assert.equal(empty.track.children.length, 5);
+  assert.equal(empty.preview.hidden, false);
+  assert.match(read('src/sections/Testimonials.mjs'), /As pessoas e falas abaixo são fictícias/);
   const ready = mount('https://visitae.example/', { ambientes: { authorized: true, client: 'Cliente autorizado', business: 'Negócio autorizado', title: 'Título real', summary: 'Resumo real', transcript: 'Transcrição fornecida', videoSrc: '/relato.mp4', poster: '/capa.webp', captionsSrc: '/legendas.vtt' } });
-  assert.equal(ready.track.children.length, 1);
-  assert.equal(ready.preview.hidden, true);
+  assert.equal(ready.track.children.length, 5);
+  assert.equal(ready.preview.hidden, false);
   const card = ready.track.children[0];
   assert.equal(card.querySelector('.testimonial-poster').src, 'https://visitae.example/capa.webp');
   assert.equal(card.querySelector('.testimonial-identity').children[1].textContent, 'Negócio autorizado');
   assert.equal(ready.doc.querySelector('video'), null);
   assert.equal(card.querySelector('button'), null);
+  const ids = ['ambientes', 'atendimento', 'google', 'captacao', 'entrega'];
+  const allReal = mount('https://visitae.example/', Object.fromEntries(ids.map(id => [id, { authorized: true, client: 'Cliente autorizado', title: 'Título real', summary: 'Resumo real', transcript: 'Transcrição fornecida', videoSrc: '/relato.mp4', poster: '/capa.webp', captionsSrc: '/legendas.vtt' }])));
+  assert.equal(allReal.preview.hidden, true);
+  assert.equal(allReal.track.children.length, 5);
 });

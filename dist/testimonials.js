@@ -112,7 +112,7 @@
       image.loading = 'lazy';
     } else {
       image = element('div', 'testimonial-portrait-sprite');
-      image.style.backgroundPosition = `${item.portraitIndex * 25}% center`;
+      image.style.backgroundPosition = `${item.portraitIndex * 25}% top`;
       image.setAttribute('role', 'img');
       image.setAttribute('aria-label', `Personagem fictício: ${item.client}. Não é cliente real.`);
     }

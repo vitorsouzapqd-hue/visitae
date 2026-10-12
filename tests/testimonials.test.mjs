@@ -102,7 +102,7 @@ test('five compact cards show the quote before name/business, without player or 
     assert.ok(body.children.indexOf(body.querySelector('h3')) < body.children.indexOf(identity));
     assert.equal(card.querySelector('.testimonial-video-label'), null);
     assert.equal(card.querySelector('.testimonial-cover-meta'), null);
-    assert.equal(card.querySelector('.testimonial-portrait-sprite').style.backgroundPosition, `${index * 25}% center`);
+    assert.equal(card.querySelector('.testimonial-portrait-sprite').style.backgroundPosition, `${index * 25}% top`);
     assert.equal(card.querySelector('button'), null);
     assert.equal(card.querySelector('.testimonial-media-label'), null);
     assert.equal(card.querySelector('video'), null);

@@ -18,8 +18,8 @@ test('assembled page preserves the original outside the restored testimonial sec
     .replace(/^[ \t]*<dialog class="testimonial-dialog"[\s\S]*?<\/dialog>\n?/m, '');
   const expected = read('tests/fixtures/original-index.html')
     .replace('<fieldset class="location-group">', '<fieldset class="location-group"><legend>Localização do estabelecimento</legend>')
-    .replace('testimonials.js?v=visitae-relatos-visiveis', 'testimonials.js?v=visitae-relatos-sem-aviso')
-    .replace('testimonials.css?v=visitae-3', 'testimonials.css?v=visitae-relatos-sem-aviso')
+    .replace('testimonials.js?v=visitae-relatos-visiveis', 'testimonials.js?v=visitae-retratos-enquadrados')
+    .replace('testimonials.css?v=visitae-3', 'testimonials.css?v=visitae-retratos-enquadrados')
     .replace('config.js?v=visitae-relatos-visiveis', 'config.js?v=visitae-relatos-sem-aviso');
   assert.equal(withoutTestimonials(read('dist/index.html')), withoutTestimonials(expected));
   assert.equal(Object.keys(pageComponents).length, 17);

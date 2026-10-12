@@ -9,7 +9,7 @@
 .testimonial-cover::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, #12201333, transparent 35%, #121d15d9); pointer-events: none; }
 .testimonial-portrait-sprite { background-image: url('assets/testimonial-portraits-illustrative.png'); background-repeat: no-repeat; background-size: 500% auto; }
 .testimonial-portrait-sprite { position: absolute; inset: 0; z-index: -2; }
-.testimonial-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.testimonial-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; z-index: -2; }
 .testimonial-card-body { padding: 24px 23px 22px; display: flex; flex-direction: column; flex: 1; }
 .testimonial-card-body .eyebrow { font-size: 9px; color: #5f6757; letter-spacing: .075em; }
 .testimonial-card h3 { font-size: 32px; line-height: 1.12; margin-top: 12px; font-weight: 650; letter-spacing: -.035em; color: var(--ink); }

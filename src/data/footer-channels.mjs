@@ -1,12 +1,10 @@
-// Endereços planejados: ainda não confirmados como pertencentes à Visitaê.
-// Após confirmar o controle de cada canal, altere apenas seu enabled para true
-// e execute npm run build. Canais desativados são texto, sem href ou interação.
+// The platform homepage shares this host; social ownership remains unconfirmed.
 export const footerChannels = [
   {
     id: 'site',
-    label: 'visitae360.com.br',
-    url: 'https://visitae360.com.br',
-    enabled: false,
+    label: 'Visitae.bio',
+    url: '/',
+    enabled: true,
   },
   {
     id: 'instagram',

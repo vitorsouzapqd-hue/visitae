@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, copyFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { pageComponents } from '../src/page.mjs';
 import { clientOrder, styleOrder } from '../src/build-order.mjs';
@@ -17,6 +17,8 @@ const replaceSlots = (template, components) => template.replace(/\{\{(\w+)\}\}/g
 // HTML/CSS/JS output keeps the original static hosting contract. No runtime framework.
 // Only owned files are written; public assets and hosting metadata remain untouched.
 mkdirSync(new URL('dist/ui/', root), { recursive: true });
+mkdirSync(new URL('dist/assets/', root), { recursive: true });
+for (const name of readdirSync(new URL('src/assets/', root))) copyFileSync(new URL(`src/assets/${name}`, root), new URL(`dist/assets/${name}`, root));
 write('dist/index.html', replaceSlots(read('src/index.html'), pageComponents));
 write('dist/styles.css', styleOrder.map(name => read(`src/styles/${name}`)).join(''));
 write('dist/testimonials.css', read('src/styles/Testimonials.css'));

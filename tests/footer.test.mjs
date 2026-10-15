@@ -8,12 +8,12 @@ import { footerChannels } from '../src/data/footer-channels.mjs';
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
 
 test('provisional channels remain visible without external links until individually enabled', () => {
-  const inactive = Footer();
-  assert.ok(inactive.includes('visitae360.com.br'));
+  const inactive = Footer({channels:footerChannels.map(channel=>({...channel,enabled:false}))});
+  assert.ok(inactive.includes('Visitae.bio'));
   assert.ok(inactive.includes('@visitae360'));
   assert.equal((inactive.match(/class="footer-channel"/g) || []).length, 2);
   for (const channel of footerChannels) {
-    assert.equal(channel.enabled, false);
+    assert.equal(channel.enabled, channel.id==='site');
     assert.ok(!inactive.includes(`href="${channel.url}"`));
   }
   for (const activeIds of [['site'], ['instagram'], ['site', 'instagram']]) {

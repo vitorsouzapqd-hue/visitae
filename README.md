@@ -1,5 +1,11 @@
 # Visitaê
 
+## Endereço dos serviços 360°
+
+A plataforma Visitae.bio ocupa a raiz; esta landing ocupa `/360` no mesmo host. Domínio principal solicitado: `https://visitae.bio`, pendente de registro/DNS em 15/10/2026. O servidor da plataforma utiliza sua origem pública configurada para os metadados enquanto o domínio não estiver ativo. O HTML usa base `/360/` para preservar assets e links de seção. Conta/editor e páginas de comerciantes permanecem no aplicativo.
+
+As fontes deste repositório são a referência dos serviços. Assets originais ficam em `src/assets/`, copiados ao compilar. A implantação integrada conserva um espelho destas fontes em `Visitae.Bio/services360/`, com commit de origem registrado; não editar esse espelho como uma landing independente. Alterações locais ainda não commitadas de outras tarefas não foram incorporadas.
+
 ## Rodapé — presença digital provisória
 
 Apresentação compacta: logo oficial em 31 px e slogan de apoio em DM Sans 15 px, reduzido para 14 px no celular, sem quebra forçada. No mobile, a ordem de leitura é marca, presença digital e navegação em duas colunas; créditos, retorno ao início e copyright ficam na faixa final. Títulos, links secundários e avisos têm pesos distintos. No desktop, a disposição das três colunas permanece marca, navegação e presença digital. Os links mantêm alvos de toque de 44 px.

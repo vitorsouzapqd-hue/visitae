@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "predev": "npm run build",
-    "dev": "python -m http.server 5173 --bind 127.0.0.1 --directory dist",
+    "dev": "node scripts/serve.mjs",
     "precheck": "npm run build",
     "check": "node scripts/check.mjs",
     "pretest": "npm run build",

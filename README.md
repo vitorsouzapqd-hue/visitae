@@ -6,6 +6,8 @@ A plataforma Visitae.bio ocupa a raiz; esta landing ocupa `/360` no mesmo host. 
 
 As fontes deste repositório são a referência dos serviços. Assets originais ficam em `src/assets/`, copiados ao compilar. A implantação integrada conserva um espelho destas fontes em `Visitae.Bio/services360/`, com commit de origem registrado; não editar esse espelho como uma landing independente. Alterações locais ainda não commitadas de outras tarefas não foram incorporadas.
 
+`npm run dev` também monta `/360` e seus recursos, em `http://127.0.0.1:5173/360`, preservando a base usada na implantação integrada. A raiz do servidor local redireciona para esse caminho.
+
 ## Rodapé — presença digital provisória
 
 Apresentação compacta: logo oficial em 31 px e slogan de apoio em DM Sans 15 px, reduzido para 14 px no celular, sem quebra forçada. No mobile, a ordem de leitura é marca, presença digital e navegação em duas colunas; créditos, retorno ao início e copyright ficam na faixa final. Títulos, links secundários e avisos têm pesos distintos. No desktop, a disposição das três colunas permanece marca, navegação e presença digital. Os links mantêm alvos de toque de 44 px.
